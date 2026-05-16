@@ -1,29 +1,39 @@
-import {ToDo} from "../entities/toDo.js";
-export {toDoService};
+import { ToDo } from "../entities/toDo.js";
+export { toDoService };
 
 const toDoService = (() => {
-    const toDos = [];
+    const toDos = [];    
 
-    function create(params) {
-        const toDo = new ToDo(params.title, params.description, params.dueDate, params.isUrgent, params.i)
+    function getAll() {
+        //RETURN ALL TO DOS
     }
 
-    function edit(id, params) {
+    function get(id) {
+        //RETURN TO DO
+    }
+
+    function toggle(id) {
+        //TOGGLE A TO DO
+    }
+
+    function create(data) {
+        //CREATE
+        const toDo = new ToDo(data.title, data.description, data.dueDate, data.isUrgent, data.i)
+    }
+
+    function edit(id, data) {
+        //EDIT
         const toDo = toDos.find((td) => td.Id == id);
-        toDo.title = params.title ?? toDo.title;
-        toDo.description = params.description ?? toDo.description;
-        toDo.dueDate = params.dueDate ?? toDo.dueDate;
-        toDo.title = params.isUrgent ?? toDo.isUrgent;
-        toDo.title = params.title ?? toDo.title;
+        toDo.title = data.title ?? toDo.title;
+        toDo.description = data.description ?? toDo.description;
+        toDo.dueDate = data.dueDate ?? toDo.dueDate;
+        toDo.title = data.isUrgent ?? toDo.isUrgent;
+        toDo.title = data.title ?? toDo.title;
     }
 
-    function removeById() {
-
+    function remove(id) {
+        //REMOVE
     }
 
-    function toggleById() {
-
-    }
-
-    return { create, edit, remove }
+    return { getAll, get, toggle, create, edit, remove };
 })();

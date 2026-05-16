@@ -1,0 +1,5 @@
+class ToDoSeeder {
+    constructor(repository) {
+
+    }
+}

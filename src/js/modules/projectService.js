@@ -4,27 +4,31 @@ export {projectService};
 const projectService = (() => {
     const projects = [];
 
-    //CREATE A PROJECT
-    function create(params){
-        const project = new Project(params.title, params.toDosIds, params.notes);
-        projects.push(project);
+    function getAll() {
+        //RETURN ALL PROJECTS
+    }
+
+    function get(id) {
+        //RETURN PROJECT
+    }
+
+    function create(data) {
+        //CREATE
+        const project = new Project(data.title, data.toDosIds, data.notes);
     }
     
-    //REMOVE A PROJECT
-    function removeById(id){
+    function edit(id, data) {
+        //EDIT
+    }
+    
+    function remove(id){
+        //REMOVE
         projects = projects.filter((p) => p.Id != id);
-        //REMOVE ALL TODOS LATER
     }
 
-    function addToDoId(projectId, toDoId) {
-        const project = projects.find((p) => p.Id == projectId);
-        projectId.toDosIds.push(toDoId);
-    }
-    
-    function removeToDoId(projectId, toDoId) {
-        const project = projects.find((p) => p.Id == projectId);
-        project.toDosIds = project.toDosIds.filter((td) => td.Id != toDoId);
+    function getToDos(id) {
+        //RETURN TO DOS OF PROJECT
     }
 
-    return { create, removeById, addToDoId, removeToDoId }
+    return { getAll, get, create, edit, remove, getToDos };
 })();
