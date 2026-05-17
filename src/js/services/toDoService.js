@@ -1,11 +1,12 @@
-import { ToDo } from "../entities/toDo.js";
+import { ToDo } from "../components/toDo/toDo.js";
 export { toDoService };
 
 const toDoService = (() => {
-    const toDos = [];    
+    const repository = [];    
 
     function getAll() {
         //RETURN ALL TO DOS
+        return [...repository.values()];
     }
 
     function get(id) {
@@ -18,12 +19,13 @@ const toDoService = (() => {
 
     function create(data) {
         //CREATE
-        const toDo = new ToDo(data.title, data.description, data.dueDate, data.isUrgent, data.i)
+        const toDo = new ToDo(data.title, data.description, data.dueDate, data.isUrgent ?? false, data.isCompleted ?? false);
+        repository.push(toDo);
     }
 
     function edit(id, data) {
         //EDIT
-        const toDo = toDos.find((td) => td.Id == id);
+        const toDo = repository.find((td) => td.Id == id);
         toDo.title = data.title ?? toDo.title;
         toDo.description = data.description ?? toDo.description;
         toDo.dueDate = data.dueDate ?? toDo.dueDate;

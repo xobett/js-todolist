@@ -15,10 +15,6 @@ class Project {
             throw new Error("Notes must be a valid string");
         }
 
-        if(!Array.isArray(toDosIds)){
-            throw new Error("To dos Ids must be an array");
-        }
-
         this.#id = crypto.randomUUID();
         this.title = title;
         this.notes = notes;
@@ -29,6 +25,6 @@ class Project {
     }
 
     addToDos(toDos) {
-
+        
     }
 }

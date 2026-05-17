@@ -1,12 +1,27 @@
-import { toDoService } from "./toDoService.js";
-import { projectService } from "./projectService.js";
 import { uiController } from "./uiController.js";
+import { toDoService } from "../services/toDoService.js";
+import { projectService } from "../services/projectService.js";
+import { ToDoSeeder } from "../helpers/seeders/toDoSeeder.js";
+import { ProjectSeeder } from "../helpers/seeders/projectSeeder.js";
 
 export { controller };
 
-const controller = ((uiController) =>{
+const controller = (() =>{
+    function seed() {
+        const projectSeeder = new ProjectSeeder();
+        projectSeeder.values.forEach(p => {
+            createProject(p);
+        });
+
+        const toDoSeeder = new ToDoSeeder();
+        toDoSeeder.values.forEach(td => {
+            createToDo(td);
+        });
+    }
+    
     function run() {
         uiController.render();
+        seed();
     }
 
     function addUiController(controller) {
@@ -14,7 +29,7 @@ const controller = ((uiController) =>{
     }
 
     function getAllToDos() {
-        toDoService.getAll();
+        return toDoService.getAll();
     }
 
     function getToDo(id) {
@@ -38,14 +53,14 @@ const controller = ((uiController) =>{
     }
 
     function getAllProjects() {
-        projectService.getAll();
+        return projectService.getAll();
     }
 
     function getProject(id) {
         projectService.get(id);
     }
 
-    function createProject() {
+    function createProject(data) {
         projectService.create(data);
     }
     
@@ -67,4 +82,4 @@ const controller = ((uiController) =>{
             getAllProjects, getProject, createProject, editProject, removeProject,
             getToDos 
         };
-})(uiController);
+})();
