@@ -1,12 +1,14 @@
-import {controller} from "./js/controllers/controller.js";
+import {controller} from "./controllers/controller.js";
 
 controller.run();
+const toDo = controller.getToDoByName('was');
+console.log(toDo);
 
-const projectValue = {
-    title: "New project!",
-    notes: "Need a virtual connection",
-};
-controller.createProject(projectValue)
-console.log(controller.getAllProjects());
+const project = controller.getProjectByName('Test')[0];
+console.log(project)
+console.log(project.Id)
+
+controller.addToDos(project.Id, toDo);
+console.log(controller.getToDos(project.Id))
 
 //SEED
