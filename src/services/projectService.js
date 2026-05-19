@@ -46,7 +46,7 @@ const projectService = (() => {
     function add(id, toDos) {
         //ADD A TO DO
         const project = repository.find((p) => p.Id == id);
-        project.add(toDos);
+        project.add(...toDos);
     }
 
     function getToDos(id) {
@@ -55,7 +55,12 @@ const projectService = (() => {
         return project.ToDos;
     }
 
-    return { getAll, get, getByName, create, edit, remove, getToDos, add };
+    function removeToDos(id, toDos){
+        const project = repository.find((p) => p.Id == id);
+        project.add(...toDos);
+    }
+
+    return { getAll, get, getByName, create, edit, remove, removeToDos, getToDos, add };
 })();
 
 //helpers

@@ -88,6 +88,10 @@ const controller = (() =>{
         projectService.add(projectId, toDos);
     }
 
+    function remvoeToDosFromProject(projectId, ...toDos) {
+        
+    }
+
     return {
             run,
             getAllToDos, getToDo, getToDoByName, toggleToDo, createToDo, editToDo, removeToDo,

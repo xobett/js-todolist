@@ -28,6 +28,10 @@ class Project {
         this.#toDos.push(...toDos);
     }
 
+    remove(toDos) {
+        this.#toDos = this.#toDos.filter((td) => !toDos.incluudes(td.Id))
+    }
+
     get ToDos() {
         return [...this.#toDos.values()];
     }

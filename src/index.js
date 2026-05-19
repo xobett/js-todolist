@@ -9,6 +9,12 @@ console.log(project)
 console.log(project.Id)
 
 controller.addToDos(project.Id, toDo);
-console.log(controller.getToDos(project.Id))
+
+const toDosFromProject = controller.getToDos(project.Id);
+const mock = toDosFromProject[0];
+console.log(toDosFromProject)
+console.log(mock)
+
+
 
 //SEED
