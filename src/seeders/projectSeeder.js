@@ -3,10 +3,10 @@ export { ProjectSeeder };
 
 class ProjectSeeder {
     values = [
-        {title: "Test project", notes: "Some notes"},
-        {title: "Some title", notes: "Some notes"},
-        {title: "Some title", notes: "Some notes"},
-        {title: "Some title", notes: "Some notes"},
-        {title: "Some title", notes: "Some notes"},
+        {title: "First Project", notes: "Some notes"},
+        {title: "Second Project", notes: "Some notes"},
+        {title: "Third Project", notes: "Some notes"},
+        {title: "Fourth Project", notes: "Some notes"},
+        {title: "Fifth Project", notes: "Some notes"},
     ];
 }

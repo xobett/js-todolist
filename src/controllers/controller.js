@@ -80,22 +80,26 @@ const controller = (() =>{
         return projectService.remove(id);
     }
 
-    function getToDos(projectId) {
+    function getToDosFromProject(projectId) {
         return projectService.getToDos(projectId);
     }
 
-    function addToDos(projectId, ...toDos) {
+    function addToDosToProject(projectId, toDos) {
         projectService.add(projectId, toDos);
     }
 
-    function remvoeToDosFromProject(projectId, ...toDos) {
-        
+    function removeToDosFromProject(projectId, ...toDos) {
+        projectService.removeToDos(projectId, toDos);
+    }
+
+    function moveToDosToProject(originProjectId, targetProjectid, ...toDos) {
+        projectService.moveToDosToProject(originProjectId, targetProjectid, toDos);
     }
 
     return {
             run,
             getAllToDos, getToDo, getToDoByName, toggleToDo, createToDo, editToDo, removeToDo,
             getAllProjects, getProject, getProjectByName, createProject, editProject, removeProject,
-            getToDos, addToDos 
+            getToDosFromProject, addToDosToProject, removeToDosFromProject, moveToDosToProject,
         };
 })();

@@ -2,14 +2,13 @@ import { Project } from "../components/project/project.js";
 export {projectService};
 
 const projectService = (() => {
-    const repository = [];
+    let repository = [];
 
     function getAll() {
         return [...repository.values()];
     }
 
     function get(id) {
-        //RETURN PROJECT
         return repository.find(p => p.Id == id);
     }
 
@@ -26,7 +25,6 @@ const projectService = (() => {
     }
     
     function create(data) {
-        //CREATE
         const project = new Project(data.title, data.notes);
         repository.push(project);
         
@@ -34,40 +32,41 @@ const projectService = (() => {
     }
     
     function edit(id, data) {
-        //EDIT
         const project = repository.find(p => p.Id == id);
     }
     
     function remove(id){
-        //REMOVE
-        repository = repository.filter((p) => p.Id != id);
+        const project = repository.find(p => p.Id == id);
+        project.removeAll();
+
+        repository = repository.filter((p) => p.Id != project.Id);
     }
 
     function add(id, toDos) {
-        //ADD A TO DO
+        if (!Array.isArray(toDos)) {
+            toDos = [toDos];
+        }
         const project = repository.find((p) => p.Id == id);
-        project.add(...toDos);
+        project.add(toDos);
     }
 
     function getToDos(id) {
-        //RETURN TO DOS OF PROJECT
         const project = repository.find(p => p.Id == id);
         return project.ToDos;
     }
 
     function removeToDos(id, toDos){
         const project = repository.find((p) => p.Id == id);
-        project.add(...toDos);
+        project.remove(toDos);
     }
 
-    return { getAll, get, getByName, create, edit, remove, removeToDos, getToDos, add };
+    function moveToDosToProject(originProjectId, targetProjectid, toDos) {
+        const originProject = repository.find((p) => p.Id == originProjectId);
+        originProject.remove(toDos);
+        
+        const targetProject = repository.find((p) => p.Id == targetProjectid);
+        targetProject.add(toDos);
+    }
+
+    return { getAll, get, getByName, create, edit, remove, removeToDos, getToDos, add, moveToDosToProject };
 })();
-
-//helpers
-
-function mapEntityToDto(entity) {
-}
-
-function mapDtoToEntity(dto){
-
-}

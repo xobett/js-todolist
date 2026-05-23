@@ -11,7 +11,8 @@ const toDoService = (() => {
     }
 
     function get(id) {
-        //RETURN TO DO
+        const toDo = repository.find((td) => td.Id == id);
+        return toDo;
     }
 
     function getByName(term) {
@@ -27,7 +28,8 @@ const toDoService = (() => {
     }
 
     function toggle(id) {
-        //TOGGLE A TO DO
+        const toDo = repository.find((td) => td.Id == id);
+        toDo.toggle();
     }
 
     function create(data) {

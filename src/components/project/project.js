@@ -29,7 +29,13 @@ class Project {
     }
 
     remove(toDos) {
-        this.#toDos = this.#toDos.filter((td) => !toDos.incluudes(td.Id))
+        this.#toDos = this.#toDos.filter(
+            (td) => !toDos.some((removableToDo) => removableToDo.Id == td.Id)
+        );
+    }
+
+    removeAll() {
+        this.#toDos = [];
     }
 
     get ToDos() {

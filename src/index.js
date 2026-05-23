@@ -1,20 +1,26 @@
 import {controller} from "./controllers/controller.js";
 
 controller.run();
-const toDo = controller.getToDoByName('was');
-console.log(toDo);
+const toDos = controller.getAllToDos()[0];
+console.log(toDos)
+const project = controller.getAllProjects()[0];
+controller.addToDosToProject(project.Id, toDos);
 
-const project = controller.getProjectByName('Test')[0];
-console.log(project)
-console.log(project.Id)
+controller.toggleToDo(toDos.Id);
 
-controller.addToDos(project.Id, toDo);
+const originProject = controller.getAllProjects()[0];
+const targetProject = controller.getAllProjects()[1];
 
-const toDosFromProject = controller.getToDos(project.Id);
-const mock = toDosFromProject[0];
-console.log(toDosFromProject)
-console.log(mock)
+console.log(originProject);
+console.log(targetProject);
 
+controller.moveToDosToProject(originProject.Id, targetProject.Id, toDos);
 
+console.log(originProject);
+console.log(targetProject);
+
+const projects = controller.getAllProjects();
+controller.removeProject(originProject.Id);
+console.log(projects);
 
 //SEED
