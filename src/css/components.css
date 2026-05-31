@@ -1,0 +1,35 @@
+button {
+    outline: none;
+    border: none;
+}
+
+.btn{
+    user-select: none;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: fit-content;
+    padding: 4px 10px;
+
+    color: var(--clr-white-100);
+    background-color: var(--clr-teal-25);
+    border-radius: 10px;
+    
+    font-weight: bold;
+    transform-origin: center;
+
+    transition: 
+        box-shadow 0.15s ease-out,
+        transform 0.15s ease-out;
+}
+
+.btn:hover{
+    cursor: pointer;
+    transform:translateY(-2px);
+}
+
+.btn:active{
+    transform: scale(0.97);
+}

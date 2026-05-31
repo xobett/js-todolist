@@ -1,0 +1,16 @@
+to-do {
+    background-color: aquamarine;
+
+    padding: 10px;
+}
+
+to-do label {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    grid-auto-rows: 1fr;
+}
+
+to-do label p {
+    grid-column: 1 / 3;
+}

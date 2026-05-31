@@ -1,11 +1,10 @@
 header {
-    background-color: var(--clr-teal-25);
+    background-color: var(--clr-teal-50);
 }
 
 ul {
     padding: 1rem;
     font-size: 1.1rem;
-    font-family: var(--font-family);
 }
 
 .tab a {
@@ -28,7 +27,7 @@ ul {
 }
 
 .tab a:hover {
-    background-color: rgba(255, 255, 255, 0.6);
+    background-color: var(--clr-teal-25);
 }
 
 hr {

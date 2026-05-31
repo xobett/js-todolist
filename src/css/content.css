@@ -1,0 +1,18 @@
+.content {
+    padding: 1rem;
+    
+    display: grid;
+    grid-template-rows: 50px 1fr;
+}
+
+.action-btns-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.to-dos-container {
+    display: grid;
+    grid-auto-rows: minmax(50px, 80px);
+    gap: 7px;
+}

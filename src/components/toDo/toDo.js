@@ -1,6 +1,6 @@
-export {ToDo};
+import './toDo.css';
 
-class ToDo {
+export class ToDo {
     #id
     title;
     description;
