@@ -1,0 +1,19 @@
+body {
+    background-color: var(--clr-white-50);
+
+    min-height: 100vh;
+    height: 100vh;
+    width: 100vw;
+
+    display: grid;
+    grid-template-columns: max(15%, 190px) 1fr;
+}
+
+.center {
+    text-align: center;
+}
+
+svg {
+    width: var(--icon-size);
+    height: var(--icon-size);
+}

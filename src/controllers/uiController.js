@@ -1,6 +1,8 @@
+import '../css/variables.css';
 import '../css/josh-comeau-reset.css';
 import '../css/xobett-reset.css';
-import '../css/uiController.css';
+import '../css/main.css';
+import '../css/navbar.css';
 
 export { uiController };
 

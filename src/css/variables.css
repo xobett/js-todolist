@@ -1,0 +1,11 @@
+:root {
+    --clr-teal-25: #B0E4CC;
+    --clr-teal-50: #408A71;
+    --clr-teal-75: #285A48;
+    --clr-teal-100: #091413;
+    --clr-white-50: #bebebe;
+    --clr-white-100: #ffffff;
+
+    --icon-size: 1.3rem;
+    --font-family: sans-serif, system-ui;
+}

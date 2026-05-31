@@ -1,0 +1,49 @@
+header {
+    background-color: var(--clr-teal-25);
+}
+
+ul {
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-family: var(--font-family);
+}
+
+.tab a {
+    padding: 0 10px;
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    grid-template-rows: 35px;
+    align-items: center;
+
+    border-radius: 6px;
+
+    transition: 
+        background-color 0.15s ease-in-out;
+}
+
+.tab a span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.tab a:hover {
+    background-color: rgba(255, 255, 255, 0.6);
+}
+
+hr {
+    margin: 10px;
+
+    border: none;
+    height: 1px;
+    background-color: var(--clr-white-100);
+}
+
+@media(max-width: 768px) {
+    header {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+    }
+}

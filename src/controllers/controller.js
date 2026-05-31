@@ -21,11 +21,17 @@ const controller = (() =>{
     
     function run() {
         uiController.render();
-        seed();
+
+        onInitLoadSaved();
     }
 
-    function addUiController(controller) {
-        uiController = controller;
+    function onInitLoadSaved() {
+        const loadedToDos = toDoService.loadSaved();
+        const loadedProjects = projectService.loadSaved();
+        
+        if (!loadedToDos && !loadedProjects) {
+            seed();
+        }
     }
 
     function getAllToDos() {
@@ -33,7 +39,14 @@ const controller = (() =>{
     }
 
     function getToDo(id) {
-        return toDoService.get(id);
+        let response = {ok: true, error: null};
+        try {
+            response.data = toDoService.get(id);
+        } catch (error) {
+            response.ok = false;
+            response.error = error;
+        }
+        return response;
     }
 
     function getToDoByName(term) {
@@ -41,19 +54,47 @@ const controller = (() =>{
     }
 
     function toggleToDo(id) {
-        return toDoService.toggle(id);
+        let response = {ok: true, error: null};
+        try {
+            toDoService.toggle(id);
+        } catch (error) {
+            response.ok = false;
+            response.error = error;
+        }
+        return response;
     }
 
     function createToDo(data) {
-        return toDoService.create(data);
+        let response = {ok: true, error: null};
+        try {
+            response.data = toDoService.create(data);
+        } catch (error) {
+            response.ok = false;
+            response.error = error;
+        }
+        return response;
     }
 
-    function editToDo(id) {
-        return toDoService.edit(id, data);
+    function editToDo(id, data) {
+        let response = {ok: true, error: null};
+        try {
+            toDoService.edit(id, data);
+        } catch (error) {
+            response.ok = false;
+            response.error = error;
+        }
+        return response;
     }
 
     function removeToDo(id) {
-        return toDoService.remove(id);
+        let response = {ok: true, error: null};
+        try {
+            toDoService.remove(id);
+        } catch (error) {
+            response.ok = false;
+            response.error = error;
+        }
+        return response;
     }
 
     function getAllProjects() {
@@ -61,7 +102,14 @@ const controller = (() =>{
     }
 
     function getProject(id) {
-        return projectService.get(id);
+        let response = {ok: true, error: null};
+        try {
+            response.data = projectService.get(id);
+        } catch (error) {
+               response.ok = false;
+            response.error = error;
+        }
+        return response;
     }
 
     function getProjectByName(term) {
@@ -69,31 +117,80 @@ const controller = (() =>{
     }
 
     function createProject(data) {
-        return projectService.create(data);
+        let response = {ok: true, error: null};
+        try {
+            response.data = projectService.create(data);
+        } catch (error) {
+            response.ok = false;
+            response.error = error;
+        }
+        return response;
     }
     
-    function editProject(id) {
-        return projectService.edit(id, data);
+    function editProject(id, data) {
+        let response = {ok: true, error: null};
+        try {
+            projectService.edit(id, data);
+        } catch (error) {
+            response.ok = false;
+            response.error = error;
+        }
+        return response;
     }
     
     function removeProject(id) {
-        return projectService.remove(id);
+        let response = {ok: true, error: null};
+        try {
+            projectService.remove(id);
+        } catch (error) {
+            response.ok = false;
+            response.error = error;
+        }
+        return response;
     }
 
     function getToDosFromProject(projectId) {
-        return projectService.getToDos(projectId);
+        let response = {ok: true, error: null};
+        try {
+            response.data = projectService.getToDos(projectId);
+        } catch (error) {
+            response.ok = false;
+            response.error = error;
+        }
+        return response;
     }
 
     function addToDosToProject(projectId, toDos) {
-        projectService.add(projectId, toDos);
+        let response = {ok: true, error: null};
+        try {
+            projectService.add(projectId, toDos);
+        } catch (error) {
+            response.ok = false;
+            response.error = error;
+        }
+        return response;
     }
 
     function removeToDosFromProject(projectId, ...toDos) {
-        projectService.removeToDos(projectId, toDos);
+        let response = {ok: true, error: null};
+        try {
+            projectService.removeToDos(projectId, toDos);
+        } catch (error) {
+            response.ok = false;
+            response.error = error;
+        }
+        return response;
     }
 
     function moveToDosToProject(originProjectId, targetProjectid, ...toDos) {
-        projectService.moveToDosToProject(originProjectId, targetProjectid, toDos);
+        let response = {ok: true, error: null};
+        try {
+            projectService.moveToDosToProject(originProjectId, targetProjectid, toDos);
+        } catch (error) {
+            response.ok = false;
+            response.error = error;
+        }
+        return response;
     }
 
     return {
