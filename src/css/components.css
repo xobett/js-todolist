@@ -1,3 +1,5 @@
+/*BUTTON*/
+
 button {
     outline: none;
     border: none;
@@ -32,4 +34,40 @@ button {
 
 .btn:active{
     transform: scale(0.97);
+}
+
+/*INPUT CHECKBOX*/
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #ffffff;
+    margin: 0;
+
+    width: var(--checkbox-size);
+    height: var(--checkbox-size);
+    border: 0.15em solid var(--clr-teal-75);
+    border-radius: 50px;
+
+    display: grid;
+    place-content: center;
+}
+
+input[type="checkbox"]::before {
+    content: "";
+    width: calc(var(--checkbox-size) / 1.8);
+    height: calc(var(--checkbox-size) / 1.8);
+
+    box-shadow: inset 10em 10em 10em var(--clr-teal-75);
+    border-radius: 50px;
+
+    transform: scale(0);
+    transform-origin: center;
+
+    transition: 
+        transform 0.2s ease;
+}
+
+input[type="checkbox"]:checked::before {
+    transform: scale(1);
 }

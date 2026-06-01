@@ -5,7 +5,12 @@
     --clr-teal-100: #091413;
     --clr-white-50: #bebebe;
     --clr-white-100: #ffffff;
+    --clr-black: #000000;
+    --clr-hightlight: rgba(255, 255, 255, 0.699);
 
+    --checkbox-size: 1.6rem;
     --icon-size: 1.3rem;
     --font-family: sans-serif, system-ui;
+
+    --border-radius: 13px;
 }
