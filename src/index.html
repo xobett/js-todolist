@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
+<body class="info-displayed">
     <header>
         <nav>
             <ul>
@@ -33,62 +33,49 @@
         </nav>
     </header>
     <div class="content">
-        <div class="action-btns-container">
-            <div>
-                <input type="checkbox" name="toggle" id="toggle">
-            </div>
-            <button class="btn">&plus; Create</button>
-        </div>
+        <p>Current Section</p>
         <div class="to-dos-container">
-            <to-do>
-                <label for="to-do">
-                    <input type="checkbox" name="todo" id="to-do">
-                    <span>NAME</span>
-                    <p>Description</p>
-                </label>
+            <to-do tabindex="1">
+                <input type="checkbox" name="todo" id="to-do">
+                <span>NAME</span>
+                <span>Due Date</span>
+                <span>NAME</span>
             </to-do>
-            <to-do>
-                <label for="to-do">
-                    <input type="checkbox" name="todo" id="to-do">
-                    <span>NAME</span>
-                    <p>Description</p>
-                </label>
-            </to-do>
-            <to-do>
-                <label for="to-do">
-                    <input type="checkbox" name="todo" id="to-do">
-                    <span>NAME</span>
-                    <p>Description</p>
-                </label>
-            </to-do>
-            <to-do>
-                <label for="to-do">
-                    <input type="checkbox" name="todo" id="to-do">
-                    <span>NAME</span>
-                    <p>Description</p>
-                </label>
-            </to-do>
-            <to-do>
-                <label for="to-do">
-                    <input type="checkbox" name="todo" id="to-do">
-                    <span>NAME</span>
-                    <p>Description</p>
-                </label>
-            </to-do>
-            <to-do>
-                <label for="to-do">
-                    <input type="checkbox" name="todo" id="to-do">
-                    <span>NAME</span>
-                    <p>Description</p>
-                </label>
-            </to-do>
-            <to-do>
-                <label for="to-do">
-                    <input type="checkbox" name="todo" id="to-do">
-                    <span>NAME</span>
-                    <p>Description</p>
-                </label>
-            </to-do>
+        </div>
+        <form id="new-to-do-form" action="#">
+            <input type="text" name="name" placeholder="Try typing: &quot;Do a git commit before I forget!&quot;">
+        <div class="date-input">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-calendar-event" viewBox="0 0 16 16">
+            <path d="M11 6.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+            <path d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5M1 4v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4z"/>
+            </svg>
+        </div>
+        </form>
+    </div>
+    <div class="info-panel">
+        <b id="close-info-panel">&#10005;</b>
+        <div></div>
+        <div class="container">
+            <div>
+                <span><b>Title</b></span>
+                <p>My first Task</p>
+            </div>
+            <div>
+                <span><b>Description</b></span>
+                <p>My first description</p>
+            </div>
+            <div>
+                <span><b>Due Date</b></span>
+                <p>Today</p>
+            </div>
+            <div>
+                <span><b>Is Urgent</b></span>
+                <p>It is!</p>
+            </div>
+            <div>
+                <span><b>Priority</b></span>
+                <p>Not that importantNot</p>
+            </div>
         </div>
     </div>
 </body>

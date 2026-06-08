@@ -1,18 +1,56 @@
 .content {
-    padding: 1rem;
+    padding: 2rem;
     
     display: grid;
-    grid-template-rows: 50px 1fr;
-}
-
-.action-btns-container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    grid-template-rows: 35px 1fr 40px;
+    gap: 10px;
 }
 
 .to-dos-container {
-    display: grid;
-    grid-auto-rows: minmax(50px, 80px);
+    display: flex;
+    flex-direction: column;
     gap: 7px;
+
+    overflow-y: auto;
+}
+
+.to-dos-container > to-do {
+    flex: 1;
+    min-height: 80px;
+    max-height: 90px;
+}
+
+#new-to-do-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#new-to-do-form input[type="text"] {
+    outline: none;
+    border: 2px solid var(--clr-teal-50);
+    padding: 10px;
+    border-radius: var(--border-radius);
+    width: 80%;
+    height: 100%;
+
+    background: none;
+    transition: 
+        border 0.2s ease;
+}
+
+
+#new-to-do-form .date-input {
+    border-radius: 10px;
+    background-color: azure;
+    height: 100%;
+}
+
+#new-to-do-form input[type="text"]:hover {
+    border: 2px solid var(--clr-light-green);
+}
+
+#new-to-do-form input[type="text"]:focus {
+    border: 2px solid var(--clr-green);
 }

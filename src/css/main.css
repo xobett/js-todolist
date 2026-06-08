@@ -7,7 +7,47 @@ body {
     width: 100vw;
 
     display: grid;
-    grid-template-columns: max(15%, 190px) 1fr;
+    grid-template-columns: max(15%, 190px) 1fr 0px;
+    grid-auto-flow: column;
+
+    transition: 
+        grid-template-columns 0.3s ease-in-out;
+
+    overflow: hidden;
+}
+
+body.info-displayed {
+    grid-template-columns: max(15%, 190px) 1fr max(20%, 200px);
+}
+
+.info-panel {
+    background-color: var(--clr-teal-50);
+    padding: 20px;
+}
+
+.info-panel .container {
+    height: 500px;
+    display: grid;
+
+    min-width: 200px;
+}
+
+.info-panel p {
+    color: white;
+}
+
+.info-panel span {
+    font-size: 1.1em;
+}
+
+#close-info-panel {
+    display: block;
+    margin-bottom: 20px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: 10px;
+
+    cursor: pointer;
 }
 
 .center {

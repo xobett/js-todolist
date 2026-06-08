@@ -7,6 +7,8 @@
     --clr-white-100: #ffffff;
     --clr-black: #000000;
     --clr-hightlight: rgba(255, 255, 255, 0.699);
+    --clr-light-green: rgb(51, 255, 170);
+    --clr-green: rgb(0, 255, 85);
 
     --checkbox-size: 1.6rem;
     --icon-size: 1.3rem;

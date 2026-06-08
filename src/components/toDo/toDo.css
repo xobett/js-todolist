@@ -1,33 +1,14 @@
 to-do {
+    display: block;
     background-color: aquamarine;
 
     border-radius: var(--border-radius);
     padding: 10px;
-}
-
-to-do label {
-    height: 100%;
-    display: grid;
-    grid-template-columns: 40px 1fr;
-    grid-auto-rows: 1fr;
-
-    border-radius: inherit;
-    align-items: center;
 
     transition: 
-        background-color 0.1s ease-in;
+        background-color 0.2s ease;
 }
 
-to-do label:hover {
-    background-color: var(--clr-hightlight);
-    cursor: pointer;
-}
-
-to-do label p {
-    grid-column: 2 / 3;
-}
-
-to-do label input {
-    grid-row: 1 / 3;
-    justify-self: center;
+to-do:hover {
+    background-color: bisque;
 }
