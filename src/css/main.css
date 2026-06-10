@@ -41,13 +41,16 @@ body.info-displayed {
 }
 
 #close-info-panel {
-    display: block;
     margin-bottom: 20px;
     width: fit-content;
     margin-left: auto;
     margin-right: 10px;
 
     cursor: pointer;
+}
+
+#close-info-panel svg {
+    fill: var(--clr-teal-100);
 }
 
 .center {
@@ -61,5 +64,5 @@ svg {
     fill: var(--clr-black);
 
     transition:
-        fill 0.22s ease-in-out;
+        fill 0.2s ease-in-out;
 }

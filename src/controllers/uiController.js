@@ -6,28 +6,47 @@ import '../css/main.css';
 import '../css/navbar.css';
 import '../css/content.css';
 
-export { uiController };
+export class UiController {
+    #controller;
 
-const uiController = (() => {
-
-    function render() {
-
+    constructor(){
     }
 
-    const toDos = document.querySelectorAll('to-do');
-    toDos.forEach(td => td.addEventListener('click', toggleInfoPanel));
+    initialRender(){
+        this.#handleInfoPanel();
+    }
 
-    const closeInfoPanelBtn = document.getElementById('close-info-panel');
-    closeInfoPanelBtn.addEventListener('click', toggleInfoPanel);
+    #handleInfoPanel() {
+        const toDos = document.querySelectorAll('to-do');
+        toDos.forEach(td => td.addEventListener('click', toggleInfoPanel));
 
-    function toggleInfoPanel() {
-        if (document.body.classList.contains('info-displayed')) {
-            document.body.classList.remove('info-displayed');
-        }
-        else {
-            document.body.classList.add('info-displayed');
+        const closeInfoPanelBtn = document.getElementById('close-info-panel');
+        closeInfoPanelBtn.addEventListener('click', toggleInfoPanel);
+
+        function toggleInfoPanel(e) {
+            if (e.target.tagName === 'INPUT') return;
+
+            if (document.body.classList.contains('info-displayed')) {
+                document.body.classList.remove('info-displayed');
+            }
+            else {
+                document.body.classList.add('info-displayed');
+            }
         }
     }
 
-    return { render }
-})();
+    render(projectName, toDos) {
+        //SET CURRENT PROJECT NAME
+
+        //RENDER ALL TO DOS
+        toDos.forEach(td => {
+            //CREATE ELEMENT
+        });
+
+        this.#handleInfoPanel();
+    }
+
+    get NewToDoForm() {
+        return document.getElementById('new-to-do-form');
+    }
+}

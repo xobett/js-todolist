@@ -9,48 +9,75 @@
 .to-dos-container {
     display: flex;
     flex-direction: column;
-    gap: 7px;
+    gap: 13px;
 
     overflow-y: auto;
 }
 
 .to-dos-container > to-do {
-    flex: 1;
-    min-height: 80px;
-    max-height: 90px;
+    flex: 0 0 50px;
 }
 
 #new-to-do-form {
     display: flex;
-    justify-content: center;
     align-items: center;
     gap: 20px;
 }
 
+#new-to-do-form select,
+#new-to-do-form input[type="date"],
 #new-to-do-form input[type="text"] {
     outline: none;
     border: 2px solid var(--clr-teal-50);
-    padding: 10px;
+
     border-radius: var(--border-radius);
-    width: 80%;
     height: 100%;
 
     background: none;
     transition: 
+        max-width 0.2s ease,
+        flex-basis 0.2s ease,
         border 0.2s ease;
 }
 
-
-#new-to-do-form .date-input {
-    border-radius: 10px;
-    background-color: azure;
-    height: 100%;
+#new-to-do-form input[type="date"],
+#new-to-do-form input[type="text"] {
+    padding: 15px;
 }
 
+#new-to-do-form select:hover,
+#new-to-do-form input[type="date"]:hover,
 #new-to-do-form input[type="text"]:hover {
     border: 2px solid var(--clr-light-green);
 }
 
+#new-to-do-form select:focus,
+#new-to-do-form input[type="date"]:focus,
 #new-to-do-form input[type="text"]:focus {
     border: 2px solid var(--clr-green);
+}
+
+#new-to-do-form input[type="text"] {
+    flex: 2;
+}
+
+#new-to-do-form button {
+    position: relative;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    height: var(--icon-size-lg);
+    width: var(--icon-size-lg);
+}
+
+#new-to-do-form svg {
+    height: 100%;
+    width: 100%;
+
+    fill: var(--clr-teal-50);
+}
+
+#new-to-do-form svg:hover {
+    fill: var(--clr-light-green);
 }

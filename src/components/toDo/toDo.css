@@ -1,6 +1,8 @@
 to-do {
-    display: block;
-    background-color: aquamarine;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    background-color: var(--clr-teal-25);
 
     border-radius: var(--border-radius);
     padding: 10px;

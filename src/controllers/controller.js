@@ -1,12 +1,12 @@
-import { uiController } from "./uiController.js";
 import { toDoService } from "../services/toDoService.js";
 import { projectService } from "../services/projectService.js";
 import { ToDoSeeder } from "../seeders/toDoSeeder.js";
 import { ProjectSeeder } from "../seeders/projectSeeder.js";
+import { UiController } from "./uiController.js";
 
 export { controller };
 
-const controller = (() =>{
+const controller = ((uiController) =>{
     function seed() {
         const projectSeeder = new ProjectSeeder();
         projectSeeder.values.forEach(p => {
@@ -20,9 +20,13 @@ const controller = (() =>{
     }
     
     function run() {
-        uiController.render();
-
         onInitLoadSaved();
+        
+        uiController.initialRender();
+        uiController.NewToDoForm.addEventListener('submit', (e) => console.log('test'));
+
+        const toDos = getAllToDos();
+        uiController.render('Test', toDos);
     }
 
     function onInitLoadSaved() {
@@ -64,7 +68,7 @@ const controller = (() =>{
         return response;
     }
 
-    function createToDo(data) {
+    function createToDo() {
         let response = {ok: true, error: null};
         try {
             response.data = toDoService.create(data);
@@ -194,9 +198,6 @@ const controller = (() =>{
     }
 
     return {
-            run,
-            getAllToDos, getToDo, getToDoByName, toggleToDo, createToDo, editToDo, removeToDo,
-            getAllProjects, getProject, getProjectByName, createProject, editProject, removeProject,
-            getToDosFromProject, addToDosToProject, removeToDosFromProject, moveToDosToProject,
+            run
         };
-})();
+})(new UiController());

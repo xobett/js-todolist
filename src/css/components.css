@@ -71,3 +71,71 @@ input[type="checkbox"]::before {
 input[type="checkbox"]:checked::before {
     transform: scale(1);
 }
+
+select:not(:has(option[value="Custom"]:checked)) ~ input[type="date"] {
+    display: none;
+}
+
+select,
+::picker(select) {
+    appearance: base-select;
+}
+
+select {
+    display: flex;
+    align-items: center;
+}
+
+::picker(select) {
+    border: none;
+    border-radius: 8px;
+    margin-bottom: 0.3rem;
+}
+
+select::picker-icon {
+    color: var(--clr-teal-75);
+    transition: 
+        rotate 0.3s ease;
+}
+select:open::picker-icon {
+  rotate: 180deg;
+}
+
+option {
+    background-color: var(--clr-teal-50);
+    display: flex;
+    justify-content: start;
+    gap: 20px;
+
+    padding-block: 8px;
+    padding-inline: 10px;
+    border: 1px solid var(--clr-white-100);
+
+    transition: 
+        background-color 0.3s ease;
+}
+
+option:hover {
+    background-color: var(--clr-teal-25);
+}
+
+option::checkmark {
+    order: 1;
+    margin-left: auto;
+}
+
+option:checked {
+    font-weight: bold;
+}
+
+option:first-of-type {
+  border-radius: 8px 8px 0 0;
+}
+
+option:last-of-type {
+  border-radius: 0 0 8px 8px;
+}
+
+option:not(option:last-of-type) {
+  border-bottom: none;
+}
