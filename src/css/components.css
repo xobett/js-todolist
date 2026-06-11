@@ -13,6 +13,7 @@ button {
     align-items: center;
 
     width: fit-content;
+    height: 40px;
     padding: 4px 10px;
 
     color: var(--clr-white-100);
@@ -29,7 +30,7 @@ button {
 
 .btn:hover{
     cursor: pointer;
-    transform:translateY(-2px);
+    transform:translateY(-1px);
 }
 
 .btn:active{
@@ -72,6 +73,42 @@ input[type="checkbox"]:checked::before {
     transform: scale(1);
 }
 
+select,
+input[type="date"],
+input[type="text"] {
+    outline: none;
+    border: 2px solid var(--clr-teal-50);
+
+    border-radius: var(--border-radius);
+    height: 100%;
+
+    background: none;
+    transition: 
+        border 0.2s ease;
+}
+
+input[type="date"],
+input[type="text"] {
+    padding: 15px;
+}
+
+select:hover,
+input[type="date"]:hover,
+input[type="text"]:hover {
+    border: 2px solid var(--clr-light-green);
+}
+
+select:focus,
+input[type="date"]:focus,
+input[type="text"]:focus {
+    border: 2px solid var(--clr-green);
+}
+
+input[type="text"] {
+    flex: 2;
+}
+
+
 select:not(:has(option[value="Custom"]:checked)) ~ input[type="date"] {
     display: none;
 }
@@ -97,12 +134,13 @@ select::picker-icon {
     transition: 
         rotate 0.3s ease;
 }
+
 select:open::picker-icon {
   rotate: 180deg;
 }
 
 option {
-    background-color: var(--clr-teal-50);
+    background-color: var(--clr-teal-25);
     display: flex;
     justify-content: start;
     gap: 20px;
@@ -116,7 +154,7 @@ option {
 }
 
 option:hover {
-    background-color: var(--clr-teal-25);
+    background-color: var(--clr-light-green);
 }
 
 option::checkmark {
@@ -138,4 +176,17 @@ option:last-of-type {
 
 option:not(option:last-of-type) {
   border-bottom: none;
+}
+
+.info-panel select,
+.info-panel input {
+    background: var(--clr-white-50);
+}
+
+.info-panel ::picker-icon {
+    color: var(--clr-white-75);
+}
+
+.info-panel ::picker(select) {
+    top: anchor(bottom);
 }

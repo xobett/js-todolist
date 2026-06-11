@@ -2,8 +2,7 @@ body {
     background-color: var(--clr-white-50);
     font-family: var(--font-family);
 
-    min-height: 100vh;
-    height: 100vh;
+    height: 100svh;
     width: 100vw;
 
     display: grid;
@@ -30,6 +29,15 @@ body.info-displayed {
     display: grid;
 
     min-width: 200px;
+}
+
+.info-panel .container > div {
+    display: grid;
+    grid-template-rows: min-content 50px;
+}
+
+.info-panel button {
+    margin-inline: auto;
 }
 
 .info-panel p {
@@ -65,4 +73,21 @@ svg {
 
     transition:
         fill 0.2s ease-in-out;
+}
+
+@media(max-width: 768px) {
+    body {
+        grid-auto-flow: row;
+        grid-template-columns:  1fr;
+        grid-template-rows: 1fr;
+    }
+
+    header {
+        display: none;
+    }
+
+    .info-panel {
+        display: none;
+    }
+
 }

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body class="">
+<body>
     <header>
         <nav>
             <ul>
@@ -33,19 +33,19 @@
         </nav>
     </header>
     <div class="content">
-        <p>Current Section</p>
-        <div class="to-dos-container">
-            <to-do tabindex="1">
-                <input type="checkbox" name="todo" id="to-do">
-                <span>NAME</span>
+        <p id="current-section-txt">Current Section</p>
+        <div id="to-dos-container" class="to-dos-container">
+            <to-do>
+                <input type="checkbox" name="text">
+                <span>Text</span>
             </to-do>
-            <to-do tabindex="1">
-                <input type="checkbox" name="todo" id="to-do">
-                <span>NAME</span>
+            <to-do>
+                <input type="checkbox" name="text">
+                <span>Text</span>
             </to-do>
         </div>
         <form id="new-to-do-form" action="#">
-            <input type="text" name="name" placeholder="Try typing: &quot;Do a git commit before I forget!&quot;">
+            <input type="text" name="title" placeholder="Try typing: &quot;Do a git commit before I forget!&quot;">
             <button type="submit">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up-circle-fill" viewBox="0 0 16 16">
                     <path d="M16 8A8 8 0 1 0 0 8a8 8 0 0 0 16 0m-7.5 3.5a.5.5 0 0 1-1 0V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707z"/>
@@ -58,7 +58,12 @@
                 <option value="30">Next month</option>
                 <option value="Custom">Custom</option>
              </select>
-             <input type="date" name="date" id="date-picker" placeholder="01/01/2000">
+             <input type="date" name="dueDate" id="date-picker" placeholder="01/01/2000">
+             <select name="priority" id="priority">
+                <option selected value="LOW">Low</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="HIGH">High</option>
+             </select>
         </form>
     </div>
     <div class="info-panel">
@@ -67,28 +72,29 @@
             <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293z"/>
             </svg>
         </div>
-        <div class="container">
+        <form class="container" action="#">
             <div>
                 <span><b>Title</b></span>
-                <p>My first Task</p>
+                <input name="title" type="text" placeholder="Title">
             </div>
             <div>
                 <span><b>Description</b></span>
-                <p>My first description</p>
+                <input name="description" type="text" placeholder="Description">
             </div>
             <div>
                 <span><b>Due Date</b></span>
-                <p>Today</p>
-            </div>
-            <div>
-                <span><b>Is Urgent</b></span>
-                <p>It is!</p>
+                <input name="dueDate" type="date" placeholder="Due Date">
             </div>
             <div>
                 <span><b>Priority</b></span>
-                <p>Not that importantNot</p>
+                <select name="priority" id="priority">
+                    <option selected value="LOW">Low</option>
+                    <option value="MEDIUM">Medium</option>
+                    <option value="HIGH">High</option>
+                </select>
             </div>
-        </div>
+            <button class="btn" type="submit">Update</button>
+        </form>
     </div>
 </body>
 </html>

@@ -8,22 +8,23 @@ export { controller };
 
 const controller = ((uiController) =>{
     function seed() {
-        const projectSeeder = new ProjectSeeder();
-        projectSeeder.values.forEach(p => {
-            createProject(p);
-        });
-
         const toDoSeeder = new ToDoSeeder();
-        toDoSeeder.values.forEach(td => {
-            createToDo(td);
-        });
+        //SEED FROM TO DO SERVICE
+
+        const projectSeeder = new ProjectSeeder();
+        //SEED FROM PROJECT SERVICE
     }
     
     function run() {
+        uiController.initialRender();
         onInitLoadSaved();
         
-        uiController.initialRender();
-        uiController.NewToDoForm.addEventListener('submit', (e) => console.log('test'));
+        uiController.NewToDoForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const data = new FormData(uiController.NewToDoForm);
+            const response = createToDo(data);
+        });
 
         const toDos = getAllToDos();
         uiController.render('Test', toDos);
@@ -68,10 +69,10 @@ const controller = ((uiController) =>{
         return response;
     }
 
-    function createToDo() {
+    function createToDo(inputData) {
         let response = {ok: true, error: null};
         try {
-            response.data = toDoService.create(data);
+            response.data = toDoService.create(inputData);
         } catch (error) {
             response.ok = false;
             response.error = error;

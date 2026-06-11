@@ -2,7 +2,7 @@ to-do {
     display: flex;
     align-items: center;
     gap: 20px;
-    background-color: var(--clr-teal-25);
+    background-color: var(--clr-teal-50);
 
     border-radius: var(--border-radius);
     padding: 10px;
@@ -12,5 +12,5 @@ to-do {
 }
 
 to-do:hover {
-    background-color: bisque;
+    background-color: var(--clr-selected);
 }

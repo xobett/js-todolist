@@ -4,6 +4,10 @@
   min-height: 0;
 }
 
+input, select {
+  color: inherit;
+}
+
 a {
   text-decoration: none;
   color: inherit;

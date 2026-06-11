@@ -7,13 +7,23 @@ import '../css/navbar.css';
 import '../css/content.css';
 
 export class UiController {
-    #controller;
+    #currentSectionTxt;
+    #toDosContainer;
+
+    //INFO PANEL
 
     constructor(){
+        
     }
 
     initialRender(){
-        this.#handleInfoPanel();
+        customElements.define('to-do', class extends HTMLElement {});
+        this.#getRefs();
+    }
+
+    #getRefs() {
+        this.#currentSectionTxt = document.getElementById('current-section-txt');
+        this.#toDosContainer = document.getElementById('to-dos-container');
     }
 
     #handleInfoPanel() {
@@ -36,11 +46,23 @@ export class UiController {
     }
 
     render(projectName, toDos) {
-        //SET CURRENT PROJECT NAME
+        this.#currentSectionTxt.textContent = projectName ?? "No name";
 
-        //RENDER ALL TO DOS
         toDos.forEach(td => {
             //CREATE ELEMENT
+            const toDo = document.createElement('to-do');
+            toDo.tabIndex = 1;
+
+            const input = Object.assign(document.createElement('input'), {
+                name: td.Id,
+                type: "checkbox",
+            });
+            const span = Object.assign(document.createElement('span'), {
+                textContent: td.title,
+            });
+
+            toDo.append(input, span);
+            this.#toDosContainer.append(toDo);
         });
 
         this.#handleInfoPanel();

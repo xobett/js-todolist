@@ -10,10 +10,15 @@
     --clr-light-green: rgb(51, 255, 170);
     --clr-green: rgb(0, 255, 85);
 
+    --clr-selected: #96e9c9;
+
     --checkbox-size: 1.6rem;
     --icon-size: 1.3rem;
     --icon-size-lg: 1.9rem;
     --font-family: sans-serif, system-ui;
 
     --border-radius: 13px;
+
+    --desktop-padding: 1.8rem;
+    --mobile-padding: 1rem;
 }

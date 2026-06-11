@@ -3,7 +3,7 @@
     
     display: grid;
     grid-template-rows: 35px 1fr 40px;
-    gap: 10px;
+    padding: var(--desktop-padding, 10px);
 }
 
 .to-dos-container {
@@ -22,43 +22,6 @@
     display: flex;
     align-items: center;
     gap: 20px;
-}
-
-#new-to-do-form select,
-#new-to-do-form input[type="date"],
-#new-to-do-form input[type="text"] {
-    outline: none;
-    border: 2px solid var(--clr-teal-50);
-
-    border-radius: var(--border-radius);
-    height: 100%;
-
-    background: none;
-    transition: 
-        max-width 0.2s ease,
-        flex-basis 0.2s ease,
-        border 0.2s ease;
-}
-
-#new-to-do-form input[type="date"],
-#new-to-do-form input[type="text"] {
-    padding: 15px;
-}
-
-#new-to-do-form select:hover,
-#new-to-do-form input[type="date"]:hover,
-#new-to-do-form input[type="text"]:hover {
-    border: 2px solid var(--clr-light-green);
-}
-
-#new-to-do-form select:focus,
-#new-to-do-form input[type="date"]:focus,
-#new-to-do-form input[type="text"]:focus {
-    border: 2px solid var(--clr-green);
-}
-
-#new-to-do-form input[type="text"] {
-    flex: 2;
 }
 
 #new-to-do-form button {
@@ -80,4 +43,26 @@
 
 #new-to-do-form svg:hover {
     fill: var(--clr-light-green);
+}
+
+@media(max-width: 768px) {
+    .content {
+        grid-template-rows: 35px 1fr auto;
+        gap: 10px;
+        padding: var(--mobile-padding, 10px);
+    }
+
+    #new-to-do-form {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    #new-to-do-form input[type="text"] {
+        flex: 1 1 80%;
+    }
+
+    #new-to-do-form > * {
+        flex: 1 1 auto;
+        height: 40px;
+    }
 }

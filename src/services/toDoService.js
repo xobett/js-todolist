@@ -1,6 +1,7 @@
 import { ToDo } from "../components/toDo/toDo.js";
 import { ToDoDTO } from "../components/toDo/toDoDTO.js";
 import { PriorityEnum } from "../enums/priorityEnum.js";
+import { addDays } from "date-fns";
 export { toDoService };
 
 const toDoService = (() => {
@@ -64,10 +65,25 @@ const toDoService = (() => {
         saveChanges();
     }
 
-    function create(data) {
-        //CREATE
-        const toDo = new ToDo(data.title, data.description, data.dueDate,
-            data.isUrgent ?? false, data.isCompleted ?? false, PriorityEnum[data.priority] ?? PriorityEnum.LOW);
+    function create(inputData) {
+        let date;
+        const dueIn = Number(inputData.get('dueIn'));
+        if (Number.isInteger(dueIn)) {
+            date = addDays(new Date(), dueIn);
+        }
+        else {
+            date = inputData.get('dueDate');
+        }
+        
+        const data = {
+            title: inputData.get('title'),
+            description: null,
+            dueDate: date,
+            isCompleted: false,
+            priority: PriorityEnum[inputData.get('priority')],
+        };
+
+        const toDo = new ToDo(data.title, data.description, data.dueDate, data.isCompleted, data.priority);
         repository.push(toDo);
 
         saveChanges();
@@ -102,7 +118,6 @@ const toDoService = (() => {
         toDo.title = data.title ?? toDo.title;
         toDo.description = data.description ?? toDo.description;
         toDo.dueDate = data.dueDate ?? toDo.dueDate;
-        toDo.isUrgent = data.isUrgent ?? toDo.isUrgent;
         toDo.isCompleted = data.isCompleted ?? toDo.isCompleted;
         toDo.priority = data.priority ?? toDo.priority;
 
@@ -130,7 +145,7 @@ const toDoService = (() => {
     }
 
     function mapToDTO(entity) {
-        return new ToDoDTO(entity.Id, entity.title, entity.description, entity.dueDate, entity.isUrgent, entity.isCompleted, entity.isCompleted);
+        return new ToDoDTO(entity.Id, entity.title, entity.description, entity.dueDate, entity.isCompleted, entity.priority);
     }
 
     return { loadSaved, getAll, get, getByName, toggle, create, edit, remove };

@@ -13,6 +13,7 @@
      new HtmlWebpackPlugin({
        title: 'Production',
        template: "./src/index.html",
+       minify: false,
      }),
    ],
    output: {
