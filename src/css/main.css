@@ -78,16 +78,24 @@ svg {
 @media(max-width: 768px) {
     body {
         grid-auto-flow: row;
-        grid-template-columns:  1fr;
+        grid-template-columns: 1fr;
         grid-template-rows: 1fr;
     }
 
     header {
-        display: none;
+        position: absolute;
+        inset: 0 30% 0 0;
+        transform: translateX(-100%);
+
+        transition: 
+            transform 0.3s ease;
+    }
+
+    header.active {
+        transform: translateX(0);
     }
 
     .info-panel {
         display: none;
     }
-
 }
