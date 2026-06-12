@@ -5,8 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
-<body>
-    <header>
+<body class="">
+    <div id="hamburger-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+        <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+        </svg>
+    </div>
+    <header class="">
         <nav>
             <ul>
                 <div class="center">TO DO APP</div>
@@ -58,7 +63,7 @@
                 <option value="30">Next month</option>
                 <option value="Custom">Custom</option>
              </select>
-             <input type="date" name="dueDate" id="date-picker" placeholder="01/01/2000">
+             <input type="date" name="dueDate" id="date-picker">
              <select name="priority" id="priority">
                 <option selected value="LOW">Low</option>
                 <option value="MEDIUM">Medium</option>
@@ -83,7 +88,7 @@
             </div>
             <div>
                 <span><b>Due Date</b></span>
-                <input name="dueDate" type="date" placeholder="Due Date">
+                <input name="dueDate" type="date">
             </div>
             <div>
                 <span><b>Priority</b></span>

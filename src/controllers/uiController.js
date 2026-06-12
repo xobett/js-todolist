@@ -9,6 +9,9 @@ import '../css/content.css';
 export class UiController {
     #currentSectionTxt;
     #toDosContainer;
+    #hamburgerIcon;
+    #header;
+    #infoPanel;
 
     //INFO PANEL
 
@@ -17,13 +20,41 @@ export class UiController {
     }
 
     initialRender(){
-        customElements.define('to-do', class extends HTMLElement {});
         this.#getRefs();
+        this.#assignEventHandlers();
     }
 
     #getRefs() {
         this.#currentSectionTxt = document.getElementById('current-section-txt');
         this.#toDosContainer = document.getElementById('to-dos-container');
+        this.#hamburgerIcon = document.getElementById('hamburger-icon');
+        this.#header = document.querySelector('header');
+        this.#infoPanel = document.querySelector('.info-panel');
+    }
+
+    #assignEventHandlers() {
+        this.#hamburgerIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (this.#header.classList.contains('active')) {
+                this.#header.classList.remove('active');
+            }
+            else{
+                this.#header.classList.add('active');
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            const clickedInsideInfoPanel = this.#infoPanel.contains(e.target);
+            const clickedInsideHeader = this.#header.contains(e.target);
+
+            if (!clickedInsideInfoPanel) {
+                document.body.classList.remove('info-displayed');
+            }
+
+            if (!clickedInsideHeader) {
+                this.#header.classList.remove('active');
+            }
+        })
     }
 
     #handleInfoPanel() {
@@ -34,6 +65,7 @@ export class UiController {
         closeInfoPanelBtn.addEventListener('click', toggleInfoPanel);
 
         function toggleInfoPanel(e) {
+            e.stopPropagation();
             if (e.target.tagName === 'INPUT') return;
 
             if (document.body.classList.contains('info-displayed')) {

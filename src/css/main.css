@@ -1,9 +1,14 @@
+html {
+    overflow: hidden;
+}
+
 body {
     background-color: var(--clr-white-50);
     font-family: var(--font-family);
 
     height: 100svh;
     width: 100vw;
+    max-width: 100vw;
 
     display: grid;
     grid-template-columns: max(15%, 190px) 1fr 0px;
@@ -21,19 +26,7 @@ body.info-displayed {
 
 .info-panel {
     background-color: var(--clr-teal-50);
-    padding: 20px;
-}
-
-.info-panel .container {
-    height: 500px;
-    display: grid;
-
-    min-width: 200px;
-}
-
-.info-panel .container > div {
-    display: grid;
-    grid-template-rows: min-content 50px;
+    padding: 1.7rem 1rem 1rem;
 }
 
 .info-panel button {
@@ -48,9 +41,20 @@ body.info-displayed {
     font-size: 1.1em;
 }
 
+.info-panel .container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info-panel .container > div {
+    display: grid;
+    gap: 10px;
+}
+
 #close-info-panel {
-    margin-bottom: 20px;
     width: fit-content;
+    margin-bottom: 0.4rem;
     margin-left: auto;
     margin-right: 10px;
 
@@ -82,20 +86,27 @@ svg {
         grid-template-rows: 1fr;
     }
 
-    header {
-        position: absolute;
-        inset: 0 30% 0 0;
-        transform: translateX(-100%);
+    body.info-displayed {
+        grid-template-columns: auto;
+    }
+
+    .info-panel {
+        transform: translateX(100%);
+        position: fixed;
+        inset: 0 0 0 30%;
+
+        font-size: 0.9rem;
 
         transition: 
             transform 0.3s ease;
     }
 
-    header.active {
+    body.info-displayed .info-panel {
         transform: translateX(0);
     }
 
-    .info-panel {
-        display: none;
+    .info-panel select,
+    .info-panel input {    
+        height: 40px;
     }
 }

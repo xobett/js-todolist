@@ -104,10 +104,14 @@ input[type="text"]:focus {
     border: 2px solid var(--clr-green);
 }
 
+input[type="date"] {
+    appearance: none;
+    position: relative;
+}
+
 input[type="text"] {
     flex: 2;
 }
-
 
 select:not(:has(option[value="Custom"]:checked)) ~ input[type="date"] {
     display: none;

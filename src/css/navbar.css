@@ -45,6 +45,43 @@ hr {
     background-color: var(--clr-white-100);
 }
 
-@media(max-width: 768px) {
+#hamburger-icon {
+    position: absolute;
+    visibility: hidden;
+    pointer-events: none;
+}
 
+@media(max-width: 768px) {
+    header {
+        position: absolute;
+        inset: 0 30% 0 0;
+        transform: translateX(-100%);
+
+        transition: 
+            transform 0.3s ease;
+    }
+
+
+    header.active {
+        transform: translateX(0);
+    }
+
+    #hamburger-icon {
+        visibility: visible;
+        pointer-events: all;
+        top: 0;
+        margin-top: 1rem;
+        margin-left: 1rem;
+
+        z-index: 2;
+    }
+    
+    #hamburger-icon svg {        
+        width: var(--icon-size-lg);
+        height: var(--icon-size-lg);
+    }
+
+    ul {
+        padding-top: 3rem;
+    }
 }
