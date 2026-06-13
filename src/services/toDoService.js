@@ -27,6 +27,16 @@ const toDoService = (() => {
         return loaded;
     }
 
+    function seed(toDos) {
+        try {
+            toDos.forEach((td) => {
+                repository.push(new ToDo(td.title, td.description, td.dueDate, td.isCompleted, td.priority));
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     function getAll() {
         const values = repository.map(entity => mapToDTO(entity));
         return values;
@@ -131,6 +141,9 @@ const toDoService = (() => {
         if (!toDo) {
             throw new Error(`To Do ${id} not found`);
         }
+        repository = repository.filter((td) => td.Id !== toDo.Id);
+
+        //TODO: REMOVE FROM EXISTING PROJECTS AS WELL!
 
         saveChanges();
     }
@@ -145,8 +158,8 @@ const toDoService = (() => {
     }
 
     function mapToDTO(entity) {
-        return new ToDoDTO(entity.Id, entity.title, entity.description, entity.dueDate, entity.isCompleted, entity.priority);
+        return new ToDoDTO(entity.Id, entity.title, entity.description, entity.dueDate, entity.isCompleted, Object.keys(PriorityEnum).find(k => PriorityEnum[k] === entity.priority));
     }
 
-    return { loadSaved, getAll, get, getByName, toggle, create, edit, remove };
+    return { loadSaved, seed, getAll, get, getByName, toggle, create, edit, remove };
 })();

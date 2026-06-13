@@ -2,7 +2,7 @@ to-do {
     display: flex;
     align-items: center;
     gap: 20px;
-    background-color: var(--clr-teal-50);
+    background-color: var(--clr-teal-25);
 
     border-radius: var(--border-radius);
     padding: 10px;
@@ -12,5 +12,26 @@ to-do {
 }
 
 to-do:hover {
-    background-color: var(--clr-selected);
+    background-color: var(--clr-light-green);
+}
+
+to-do .delete-btn {
+    padding: 5px;
+    margin-left: auto;
+    margin-right: 0.7rem;
+
+    border-radius: 6px;
+
+    transition: 
+        background-color 0.3s ease;
+}
+
+to-do .delete-btn:hover {
+    cursor: pointer;
+    background-color: var(--clr-red-25, #ff4b4b);
+}
+
+to-do .delete-btn:hover svg{
+    fill: white;
+    pointer-events: none;
 }

@@ -53,9 +53,10 @@ hr {
 
 @media(max-width: 768px) {
     header {
-        position: absolute;
+        position: fixed;
         inset: 0 30% 0 0;
         transform: translateX(-100%);
+        z-index: 1;
 
         transition: 
             transform 0.3s ease;

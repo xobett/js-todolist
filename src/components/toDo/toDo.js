@@ -17,7 +17,7 @@ export class ToDo {
             throw new Error("Title must be a valid string");
         }
 
-        this.#id = id ?? crypto.randomUUID();
+        this.#id = id ?? (crypto.randomUUID?.() ?? this.#generateUUID);
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
@@ -42,5 +42,13 @@ export class ToDo {
             "isCompleted" : this.isCompleted,
             "priority" : this.priority,
         };
+    }
+
+    #generateUUID() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+            const r = Math.random() * 16 | 0;
+            const v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
     }
 }

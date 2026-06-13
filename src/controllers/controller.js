@@ -9,6 +9,7 @@ export { controller };
 const controller = ((uiController) =>{
     function seed() {
         const toDoSeeder = new ToDoSeeder();
+        toDoService.seed(toDoSeeder.values);
         //SEED FROM TO DO SERVICE
 
         const projectSeeder = new ProjectSeeder();
@@ -16,9 +17,10 @@ const controller = ((uiController) =>{
     }
     
     function run() {
-        uiController.initialRender();
-        onInitLoadSaved();
+        uiController.init();
+        seed();
         
+        //ASSIGN EVENT LISTENER TO SUBMIT FORM
         uiController.NewToDoForm.addEventListener('submit', (e) => {
             e.preventDefault();
 
@@ -27,7 +29,37 @@ const controller = ((uiController) =>{
         });
 
         const toDos = getAllToDos();
-        uiController.render('Test', toDos);
+        refreshPage('All tasks', toDos);
+    }
+
+    function refreshPage(sectionName, toDos){
+        uiController.render(sectionName, toDos);
+        assignToggleHandlers();
+        assignDeleteHandlers();
+    }
+
+    function assignToggleHandlers() {
+        uiController.Inputs.forEach((ip) => ip.addEventListener('change', (e) => {
+            const dataset = e.target.parentNode.dataset;
+            const response = toggleToDo(dataset.Id);
+
+            if (!response.ok) {
+                e.target.checked = !e.target.checked;
+            }
+        }));
+    }
+
+    function assignDeleteHandlers() {
+        uiController.DeleteButtons.forEach((ip) => ip.addEventListener('click', (e) => {
+            const dataset = e.target.parentNode.dataset;
+            const response = removeToDo(dataset.Id);
+
+            console.log(response);
+            if (response.ok) {
+                const toDos = getAllToDos();
+                refreshPage("Updated", toDos);
+            }
+        }));
     }
 
     function onInitLoadSaved() {
@@ -198,7 +230,5 @@ const controller = ((uiController) =>{
         return response;
     }
 
-    return {
-            run
-        };
+    return { run };
 })(new UiController());
