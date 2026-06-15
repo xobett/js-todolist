@@ -1,9 +1,7 @@
 .content {
-    padding: 2rem;
-    
     display: grid;
     grid-template-rows: 35px 1fr 40px;
-    padding: var(--desktop-padding, 10px);
+    padding: var(--desktop-padding, 1rem);
 }
 
 .to-dos-container {
@@ -18,13 +16,13 @@
     flex: 0 0 50px;
 }
 
-#new-to-do-form {
+#new-to-do {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-#new-to-do-form button {
+#new-to-do button {
     position: relative;
     border: none;
     background: transparent;
@@ -34,14 +32,14 @@
     width: var(--icon-size-lg);
 }
 
-#new-to-do-form svg {
+#new-to-do svg {
     height: 100%;
     width: 100%;
 
     fill: var(--clr-teal-50);
 }
 
-#new-to-do-form svg:hover {
+#new-to-do svg:hover {
     fill: var(--clr-light-green);
 }
 
@@ -52,16 +50,16 @@
         padding: 3.4rem 1.2rem 1rem;
     }
 
-    #new-to-do-form {
+    #new-to-do {
         flex-wrap: wrap;
         gap: 10px;
     }
 
-    #new-to-do-form input[type="text"] {
+    #new-to-do input[type="text"] {
         flex: 1 1 80%;
     }
 
-    #new-to-do-form > * {
+    #new-to-do > * {
         flex: 1 1 auto;
         height: 40px;
     }

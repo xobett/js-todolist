@@ -17,7 +17,7 @@ export class ToDo {
             throw new Error("Title must be a valid string");
         }
 
-        this.#id = id ?? (crypto.randomUUID?.() ?? this.#generateUUID);
+        this.#id = id ?? (crypto.randomUUID?.() ?? this.#generateUUID());
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;

@@ -26,12 +26,13 @@ const toDoService = (() => {
 
         return loaded;
     }
-
+    
     function seed(toDos) {
         try {
             toDos.forEach((td) => {
                 repository.push(new ToDo(td.title, td.description, td.dueDate, td.isCompleted, td.priority));
             });
+            saveChanges();
         } catch (error) {
             console.log(error);
         }
@@ -135,7 +136,6 @@ const toDoService = (() => {
     }
 
     function remove(id) {
-        //REMOVE
         const toDo = repository.find((td) => td.Id == id);
 
         if (!toDo) {

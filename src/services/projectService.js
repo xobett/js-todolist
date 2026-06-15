@@ -22,7 +22,19 @@ const projectService = (() => {
             }
         }
 
+        
         return loaded;
+    }
+    
+    function seed(projects) {
+        try {
+            projects.forEach((p) => {
+                repository.push(new Project(p.title));
+            });
+            saveChanges();
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     function getAll() {
@@ -45,15 +57,18 @@ const projectService = (() => {
         term = String(term).toLowerCase();
 
         const project = repository.filter((p) =>
-            String(p.title).toLowerCase().includes(term) ||
-            String(p.notes).toLowerCase().includes(term)
+            String(p.title).toLowerCase().includes(term)
         );
 
         return project;
     }
     
-    function create(data) {
-        const project = new Project(data.title, data.notes, data.color);
+    function create(inputData) {
+        const data = {
+            title: inputData.get('title'),
+        };
+
+        const project = new Project(data.title);
         repository.push(project);
 
         saveChanges();
@@ -69,8 +84,6 @@ const projectService = (() => {
         }
 
         project.title = data.title ?? project.title;
-        project.notes = data.notes ?? project.notes;
-        project.color = data.color ?? project.color;
 
         saveChanges();
     }
@@ -151,8 +164,8 @@ const projectService = (() => {
     }
 
     function mapToDTO(entity){
-        return new ProjectDTO(entity.Id, entity.title, entity.notes, entity.color);
+        return new ProjectDTO(entity.Id, entity.title);
     }
 
-    return { loadSaved, getAll, get, getByName, create, edit, remove, removeToDos, getToDos, add, moveToDosToProject };
+    return { loadSaved, seed, getAll, get, getByName, create, edit, remove, removeToDos, getToDos, add, moveToDosToProject };
 })();

@@ -1,11 +1,17 @@
 header {
     background-color: var(--clr-teal-50);
     color: var(--clr-black);
+    padding: 1rem;
+
+    display: grid;
+    grid-template-rows: 1fr min-content;
 }
 
 ul {
-    padding: 1rem;
     font-size: 1.1rem;
+
+    display: grid;
+    gap: 10px;
 }
 
 .tab a {
@@ -51,6 +57,45 @@ hr {
     pointer-events: none;
 }
 
+#new-project {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+#new-project button {
+    position: relative;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    height: var(--icon-size-lg);
+    width: var(--icon-size-lg);
+}
+
+#new-project svg {
+    height: 100%;
+    width: 100%;
+
+    fill: var(--clr-teal-75);
+}
+
+#new-project svg:hover {
+    fill: var(--clr-light-green);
+}
+
+#new-project input[type="text"]{
+    border: 2px solid var(--clr-teal-75);
+    background: var(--clr-white-50);
+
+    height: 40px;
+    width: 100%;
+}
+
+#new-project input[type="text"]:hover{
+    border: 2px solid var(--clr-light-green);
+}
+
 @media(max-width: 768px) {
     header {
         position: fixed;
@@ -61,7 +106,6 @@ hr {
         transition: 
             transform 0.3s ease;
     }
-
 
     header.active {
         transform: translateX(0);

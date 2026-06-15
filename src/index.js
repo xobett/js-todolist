@@ -1,4 +1,4 @@
-import {controller} from "./controllers/controller.js";
+import {appController} from "./controllers/appController.js";
 import { PriorityEnum } from "./enums/priorityEnum.js";
 
-controller.run();
+appController.run();

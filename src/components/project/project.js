@@ -3,27 +3,19 @@ export {Project};
 class Project {
     #id;
     title;
-    notes;
-    color;
     #toDos = [];
 
     static fromJSON(data) {
-        return new this(data.title, data.notes, data.color, data.Id);
+        return new this(data.title, data.Id);
     }
 
-    constructor(title, notes, color, id = null, toDos = null) {
+    constructor(title, id = null, toDos = null) {
         if (typeof title !== 'string' || title.length <= 0){
             throw new Error("Title must be a valid string");
         }
 
-        if (typeof notes !== 'string' || notes.length <= 0){
-            throw new Error("Notes must be a valid string");
-        }
-
-        this.#id = id ?? crypto.randomUUID();
+        this.#id = id ?? (crypto.randomUUID?.() ?? this.#generateUUID());
         this.title = title;
-        this.notes = notes;
-        this.color = color;
         this.#toDos = toDos ?? [];
     }
 
@@ -53,8 +45,14 @@ class Project {
         return {
             "Id" : this.Id,
             "title" : this.title,
-            "notes" : this.notes,
-            "color" : this.color,
         };
+    }
+
+    #generateUUID() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+            const r = Math.random() * 16 | 0;
+            const v = c === 'x' ? r : (r & 0x3 | 0x8);
+            return v.toString(16);
+        });
     }
 }

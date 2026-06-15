@@ -7,19 +7,19 @@ import '../css/navbar.css';
 import '../css/content.css';
 import { format } from 'date-fns';
 
-export class UiController {
+export class uiController {
     #currentSectionTxt;
     #toDosContainer;
     #hamburgerIcon;
     #header;
+    #tabsContainer;
 
     #infoPanel;
+    #closeInfoPanelBtn;
     #input_title;
     #input_description;
     #input_dueDate;
     #input_priority;
-
-    //INFO PANEL
 
     constructor(){}
 
@@ -33,8 +33,10 @@ export class UiController {
         this.#toDosContainer = document.getElementById('to-dos-container');
         this.#hamburgerIcon = document.getElementById('hamburger-icon');
         this.#header = document.querySelector('header');
+        this.#tabsContainer = this.#header.querySelector('ul');
 
         this.#infoPanel = document.querySelector('.info-panel');
+        this.#closeInfoPanelBtn = document.getElementById('close-info-panel');
         this.#input_title = this.#infoPanel.querySelector('input[name="title"]');
         this.#input_description = this.#infoPanel.querySelector('input[name="description"]');
         this.#input_dueDate = this.#infoPanel.querySelector('input[name="dueDate"]');
@@ -64,14 +66,20 @@ export class UiController {
                 this.#header.classList.remove('active');
             }
         })
+
+        this.#closeInfoPanelBtn.addEventListener('click', (e) => {
+            if (document.body.classList.contains('info-displayed')) {
+                document.body.classList.remove('info-displayed');
+            }
+            else {
+                document.body.classList.add('info-displayed');
+            }
+        });
     }
 
-    #handleInfoPanel() {
+    #assignClickHandlers() {
         const toDos = document.querySelectorAll('to-do');
         toDos.forEach(td => td.addEventListener('click', toggleInfoPanel));
-
-        const closeInfoPanelBtn = document.getElementById('close-info-panel');
-        closeInfoPanelBtn.addEventListener('click', toggleInfoPanel);
 
         function toggleInfoPanel(e) {
             e.stopPropagation();
@@ -95,17 +103,16 @@ export class UiController {
         toDos.forEach(td => td.addEventListener('click', displayData));
     }
 
-    render(projectName, toDos) {
+    renderToDos(projectName, toDos) {
         this.#toDosContainer.replaceChildren();
         this.#currentSectionTxt.textContent = projectName ?? "No name";
 
         toDos.forEach(td => {
-            //CREATE ELEMENT
             const toDo = document.createElement('to-do');
             toDo.tabIndex = 1;
             toDo.dataset.Id = td.Id;
             toDo.dataset.title = td.title;
-            toDo.dataset.description = td.description;
+            toDo.dataset.description = td.description ?? '';
             toDo.dataset.dueDate = new Date(td.dueDate);
             toDo.dataset.priority = td.priority;
 
@@ -132,7 +139,36 @@ export class UiController {
             this.#toDosContainer.append(toDo);
         });
 
-        this.#handleInfoPanel();
+        this.#assignClickHandlers();
+    }
+
+    renderProjects(projects){
+        const tabs = this.#tabsContainer.querySelectorAll('li.tab:not(.main)');
+        tabs.forEach(tab => tab.remove());
+
+        projects.forEach((p) => {
+            const li = document.createElement('li');
+            li.className = 'tab';
+            li.dataset.Id = p.Id;
+
+            const a = document.createElement('a');
+            a.innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-stack" viewBox="0 0 16 16">
+                    <path d="m14.12 10.163 1.715.858c.22.11.22.424 0 .534L8.267 15.34a.6.6 0 0 1-.534 0L.165 11.555a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.66zM7.733.063a.6.6 0 0 1 .534 0l7.568 3.784a.3.3 0 0 1 0 .535L8.267 8.165a.6.6 0 0 1-.534 0L.165 4.382a.299.299 0 0 1 0-.535z"/>
+                    <path d="m14.12 6.576 1.715.858c.22.11.22.424 0 .534l-7.568 3.784a.6.6 0 0 1-.534 0L.165 7.968a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0z"/>
+                </svg>
+            `;
+            a.href = '#';
+
+            const span = Object.assign(document.createElement('span'), {
+            textContent: p.title,
+            });
+
+            a.append(span);
+            li.append(a);
+
+            this.#tabsContainer.append(li);
+        });
     }
 
     get Inputs() {
@@ -140,7 +176,11 @@ export class UiController {
     }
 
     get NewToDoForm() {
-        return document.getElementById('new-to-do-form');
+        return document.getElementById('new-to-do');
+    }
+
+    get NewProjectForm() {
+        return document.getElementById('new-project');
     }
 
     get EditForm() {
@@ -149,5 +189,9 @@ export class UiController {
 
     get DeleteButtons() {
         return document.querySelectorAll('div.delete-btn');
+    }
+
+    get ProjectTabs() {
+        return document.querySelectorAll('li.tab');
     }
 }

@@ -2,40 +2,69 @@ import { toDoService } from "../services/toDoService.js";
 import { projectService } from "../services/projectService.js";
 import { ToDoSeeder } from "../seeders/toDoSeeder.js";
 import { ProjectSeeder } from "../seeders/projectSeeder.js";
-import { UiController } from "./uiController.js";
+import { uiController } from "./uiController.js";
 
-export { controller };
+export { appController };
 
-const controller = ((uiController) =>{
+const appController = ((uiController) =>{
+    let currentProject = null;
+
     function seed() {
         const toDoSeeder = new ToDoSeeder();
         toDoService.seed(toDoSeeder.values);
-        //SEED FROM TO DO SERVICE
 
         const projectSeeder = new ProjectSeeder();
-        //SEED FROM PROJECT SERVICE
+        projectService.seed(projectSeeder.values);
     }
     
     function run() {
         uiController.init();
-        seed();
+        assignFormHandlers();
         
-        //ASSIGN EVENT LISTENER TO SUBMIT FORM
-        uiController.NewToDoForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-
-            const data = new FormData(uiController.NewToDoForm);
-            const response = createToDo(data);
-        });
-
+        onInitLoadSaved();
         const toDos = getAllToDos();
-        refreshPage('All tasks', toDos);
-    }
+        refreshToDos('All tasks', toDos);
 
-    function refreshPage(sectionName, toDos){
-        uiController.render(sectionName, toDos);
+        const projects = getAllProjects();
+        refreshProjectSection(projects);
+    }
+    
+    function refreshToDos(sectionName, toDos){
+        uiController.renderToDos(sectionName, toDos);
         assignToggleHandlers();
         assignDeleteHandlers();
+        assignCurrentProjectSelection();
+    }
+
+    function refreshProjectSection(projects) {
+        uiController.renderProjects(projects);
+    }
+
+    function assignFormHandlers() {
+        uiController.NewToDoForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const data = new FormData(this);
+            const response = createToDo(data);
+
+            if (response.ok) {
+                const toDos = getAllToDos();
+                refreshToDos("Current", toDos);
+                console.log('created');
+            }
+        });
+
+        uiController.NewProjectForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const data = new FormData(this);
+            const response = createProject(data);
+            
+            if(response.ok) {
+                const projects = getAllProjects();
+                refreshProjectSection(projects);
+            }
+        });
     }
 
     function assignToggleHandlers() {
@@ -57,14 +86,24 @@ const controller = ((uiController) =>{
             console.log(response);
             if (response.ok) {
                 const toDos = getAllToDos();
-                refreshPage("Updated", toDos);
+                console.log(toDos)
+                refreshToDos("Updated", toDos);
             }
+        }));
+    }
+
+    function assignCurrentProjectSelection() {
+        uiController.ProjectTabs.forEach((pt) => pt.addEventListener('click', (e) => {
+            const dataset = e.target.dataset;
+
+            console.log(dataset.projectId)
         }));
     }
 
     function onInitLoadSaved() {
         const loadedToDos = toDoService.loadSaved();
         const loadedProjects = projectService.loadSaved();
+        console.log(loadedProjects, loadedToDos)
         
         if (!loadedToDos && !loadedProjects) {
             seed();
@@ -153,10 +192,10 @@ const controller = ((uiController) =>{
         return projectService.getByName(term);
     }
 
-    function createProject(data) {
+    function createProject(inputData) {
         let response = {ok: true, error: null};
         try {
-            response.data = projectService.create(data);
+            response.data = projectService.create(inputData);
         } catch (error) {
             response.ok = false;
             response.error = error;
@@ -231,4 +270,4 @@ const controller = ((uiController) =>{
     }
 
     return { run };
-})(new UiController());
+})(new uiController());
