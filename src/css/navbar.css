@@ -17,14 +17,30 @@ ul {
 .tab a {
     padding: 0 10px;
     display: grid;
-    grid-template-columns: 40px 1fr;
-    grid-template-rows: 35px;
+    gap: 2px;
     align-items: center;
+    grid-template-columns: 40px 1fr 30px 30px;
+    grid-template-rows: 35px;
 
     border-radius: 6px;
 
     transition: 
         background-color 0.3s ease-in-out;
+}
+
+.tab div {
+    justify-self: center;
+    height: 100%;
+    width: 30px;
+    display: grid;
+    place-items: center;
+
+    transition: 
+        background-color 0.3s;
+}
+
+.tab div:hover {
+    background-color: var(--clr-teal-25);
 }
 
 .tab a span {
@@ -41,6 +57,9 @@ ul {
 .tab a:focus svg,
 .tab a:hover svg {
     fill: white;
+}
+
+.tab svg {
 }
 
 hr {

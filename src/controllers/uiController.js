@@ -46,6 +46,12 @@ export class uiController {
     #assignEventHandlers() {
         this.#hamburgerIcon.addEventListener('click', (e) => {
             e.stopPropagation();
+
+            if (document.body.classList.contains('info-displayed')) {
+                document.body.classList.remove('info-displayed');
+                return;
+            }
+
             if (this.#header.classList.contains('active')) {
                 this.#header.classList.remove('active');
             }
@@ -71,19 +77,18 @@ export class uiController {
             if (document.body.classList.contains('info-displayed')) {
                 document.body.classList.remove('info-displayed');
             }
-            else {
-                document.body.classList.add('info-displayed');
-            }
         });
     }
 
     #assignClickHandlers() {
-        const toDos = document.querySelectorAll('to-do');
-        toDos.forEach(td => td.addEventListener('click', toggleInfoPanel));
-
-        function toggleInfoPanel(e) {
+        const toggleInfoPanel = (e) => {
             e.stopPropagation();
             if (e.target.tagName === 'INPUT' || e.target.tagName === 'DIV') return;
+
+            if (this.#header.classList.contains('active')) {
+                this.#header.classList.remove('active');
+                return;
+            }
 
             if (document.body.classList.contains('info-displayed')) {
                 document.body.classList.remove('info-displayed');
@@ -92,6 +97,9 @@ export class uiController {
                 document.body.classList.add('info-displayed');
             }
         }
+
+        const toDos = document.querySelectorAll('to-do');
+        toDos.forEach(td => td.addEventListener('click', toggleInfoPanel));
 
         const displayData = (e) => {
             const td = e.currentTarget;
@@ -108,6 +116,8 @@ export class uiController {
         this.#currentSectionTxt.textContent = projectName ?? "No name";
 
         toDos.forEach(td => {
+            if (td === undefined || td === null) return;
+            
             const toDo = document.createElement('to-do');
             toDo.tabIndex = 1;
             toDo.dataset.Id = td.Id;
@@ -152,23 +162,41 @@ export class uiController {
             li.dataset.Id = p.Id;
 
             const a = document.createElement('a');
-            a.innerHTML = `
+            a.href = '#';
+            a.insertAdjacentHTML('beforeend', `
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-stack" viewBox="0 0 16 16">
                     <path d="m14.12 10.163 1.715.858c.22.11.22.424 0 .534L8.267 15.34a.6.6 0 0 1-.534 0L.165 11.555a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0l5.317-2.66zM7.733.063a.6.6 0 0 1 .534 0l7.568 3.784a.3.3 0 0 1 0 .535L8.267 8.165a.6.6 0 0 1-.534 0L.165 4.382a.299.299 0 0 1 0-.535z"/>
                     <path d="m14.12 6.576 1.715.858c.22.11.22.424 0 .534l-7.568 3.784a.6.6 0 0 1-.534 0L.165 7.968a.299.299 0 0 1 0-.534l1.716-.858 5.317 2.659c.505.252 1.1.252 1.604 0z"/>
                 </svg>
-            `;
-            a.href = '#';
+            `);
 
             const span = Object.assign(document.createElement('span'), {
             textContent: p.title,
             });
-
             a.append(span);
-            li.append(a);
 
+            a.insertAdjacentHTML('beforeend', `
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
+                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
+                    </svg>
+                </div>
+                <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                        <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
+                    </svg>
+                </div>
+            `);
+
+            li.append(a);
             this.#tabsContainer.append(li);
         });
+    }
+
+    closeHeader() {
+        if (this.#header.classList.contains('active')) {
+            this.#header.classList.remove('active');
+        }
     }
 
     get Inputs() {

@@ -101,42 +101,42 @@ const projectService = (() => {
         saveChanges();
     }
 
-    function add(id, toDos) {
-        if (!Array.isArray(toDos)) {
-            toDos = [toDos];
+    function add(id, toDosIds) {
+        if (!Array.isArray(toDosIds)) {
+            toDosIds = [toDosIds];
         }
         const project = repository.find((p) => p.Id == id);
 
         if (!project) {
             throw new Error(`Project ${id} not found`);
         }
-        project.add(toDos);
+        project.add(toDosIds);
 
         saveChanges();
     }
 
-    function getToDos(id) {
+    function getToDosIds(id) {
         const project = repository.find(p => p.Id == id);
 
         if (!project) {
             throw new Error(`Project ${id} not found`);
         }
         
-        return project.ToDos;
+        return project.ToDosIds;
     }
 
-    function removeToDos(id, toDos){
+    function removeToDosIds(id, toDosIds){
         const project = repository.find((p) => p.Id == id);
 
         if (!project) {
             throw new Error(`Project ${id} not found`);
         }
-        project.remove(toDos);
+        project.remove(toDosIds);
         
         saveChanges();
     }
 
-    function moveToDosToProject(originProjectId, targetProjectid, toDos) {
+    function moveToDosIdsToProject(originProjectId, targetProjectid, toDosIds) {
         const originProject = repository.find((p) => p.Id == originProjectId);
         const targetProject = repository.find((p) => p.Id == targetProjectid);
 
@@ -148,8 +148,8 @@ const projectService = (() => {
             throw new Error(`Project ${targetProjectid} not found`);
         }
         
-        originProject.remove(toDos);
-        targetProject.add(toDos);
+        originProject.remove(toDosIds);
+        targetProject.add(toDosIds);
 
         saveChanges();
     }
@@ -167,5 +167,5 @@ const projectService = (() => {
         return new ProjectDTO(entity.Id, entity.title);
     }
 
-    return { loadSaved, seed, getAll, get, getByName, create, edit, remove, removeToDos, getToDos, add, moveToDosToProject };
+    return { loadSaved, seed, getAll, get, getByName, create, edit, remove, removeToDosIds, getToDosIds, add, moveToDosIdsToProject };
 })();

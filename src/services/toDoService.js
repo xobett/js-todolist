@@ -45,11 +45,6 @@ const toDoService = (() => {
 
     function get(id) {
         const toDo = repository.find((td) => td.Id == id);
-
-        if (!toDo) {
-            throw new Error(`To Do ${id} not found`);
-        }
-        
         return toDo;
     }
 

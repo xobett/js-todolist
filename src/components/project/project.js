@@ -1,50 +1,49 @@
-export {Project};
-
-class Project {
+export class Project {
     #id;
     title;
-    #toDos = [];
+    #toDosIds = [];
 
     static fromJSON(data) {
-        return new this(data.title, data.Id);
+        return new this(data.title, data.Id, data.toDosIds);
     }
 
-    constructor(title, id = null, toDos = null) {
+    constructor(title, id = null, toDosIds = null) {
         if (typeof title !== 'string' || title.length <= 0){
             throw new Error("Title must be a valid string");
         }
 
         this.#id = id ?? (crypto.randomUUID?.() ?? this.#generateUUID());
         this.title = title;
-        this.#toDos = toDos ?? [];
+        this.#toDosIds = toDosIds ?? [];
     }
 
     get Id() {
         return this.#id;
     }
 
-    add(toDos) {
-        this.#toDos.push(...toDos);
+    add(toDosIds) {
+        this.#toDosIds.push(...toDosIds);
     }
 
-    remove(toDos) {
-        this.#toDos = this.#toDos.filter(
-            (td) => !toDos.some((removableToDo) => removableToDo.Id == td.Id)
+    remove(toDosIds) {
+        this.#toDosIds = this.#toDosIds.filter(
+            (tdId) => !toDosIds.some((removableToDoId) => removableToDoId == tdId)
         );
     }
 
     removeAll() {
-        this.#toDos = [];
+        this.#toDosIds = [];
     }
 
-    get ToDos() {
-        return [...this.#toDos.values()];
+    get ToDosIds() {
+        return [...this.#toDosIds.values()];
     }
 
     toJSON() {
         return {
             "Id" : this.Id,
             "title" : this.title,
+            "toDosIds" : this.#toDosIds,
         };
     }
 
