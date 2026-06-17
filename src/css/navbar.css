@@ -49,13 +49,13 @@ ul {
     text-overflow: ellipsis;
 }
 
-.tab a:hover,
-.tab a:focus {
+.tab:not(:has(div:hover)) a:hover,
+.tab:not(:has(div:hover)) a:focus {
     background-color: var(--clr-teal-25);
 }
 
-.tab a:focus svg,
-.tab a:hover svg {
+.tab:not(:has(div:hover)) a:focus svg,
+.tab:not(:has(div:hover)) a:hover svg {
     fill: white;
 }
 

@@ -21,6 +21,9 @@ export class uiController {
     #input_dueDate;
     #input_priority;
 
+    #editModal;
+    #deleteModal;
+
     constructor(){}
 
     init(){
@@ -41,6 +44,11 @@ export class uiController {
         this.#input_description = this.#infoPanel.querySelector('input[name="description"]');
         this.#input_dueDate = this.#infoPanel.querySelector('input[name="dueDate"]');
         this.#input_priority = this.#infoPanel.querySelector('select[name="priority"]');
+
+        this.#editModal = document.getElementById('edit-modal');
+        this.#deleteModal = document.getElementById('delete-modal');
+
+        this.#displayEditModal();
     }
 
     #assignEventHandlers() {
@@ -63,6 +71,8 @@ export class uiController {
         document.addEventListener('click', (e) => {
             const clickedInsideInfoPanel = this.#infoPanel.contains(e.target);
             const clickedInsideHeader = this.#header.contains(e.target);
+            const clickedInsideEditModal = this.#editModal.contains(e.target);
+            const clickedInsideDeleteModal = this.#deleteModal.contains(e.target);
 
             if (!clickedInsideInfoPanel) {
                 document.body.classList.remove('info-displayed');
@@ -70,6 +80,28 @@ export class uiController {
 
             if (!clickedInsideHeader) {
                 this.#header.classList.remove('active');
+            }
+
+            if (this.#editModal.open) {
+                const rect = this.#editModal.getBoundingClientRect();
+                const clickedOutside =
+                    e.clientX < rect.left ||
+                    e.clientX > rect.right ||
+                    e.clientY < rect.top ||
+                    e.clientY > rect.bottom;
+
+                if (clickedOutside) this.#editModal.close();
+            }
+
+            if (this.#deleteModal.open) {
+                const rect = this.#deleteModal.getBoundingClientRect();
+                const clickedOutside =
+                    e.clientX < rect.left ||
+                    e.clientX > rect.right ||
+                    e.clientY < rect.top ||
+                    e.clientY > rect.bottom;
+
+                if (clickedOutside) this.#deleteModal.close();
             }
         })
 
@@ -81,25 +113,8 @@ export class uiController {
     }
 
     #assignClickHandlers() {
-        const toggleInfoPanel = (e) => {
-            e.stopPropagation();
-            if (e.target.tagName === 'INPUT' || e.target.tagName === 'DIV') return;
-
-            if (this.#header.classList.contains('active')) {
-                this.#header.classList.remove('active');
-                return;
-            }
-
-            if (document.body.classList.contains('info-displayed')) {
-                document.body.classList.remove('info-displayed');
-            }
-            else {
-                document.body.classList.add('info-displayed');
-            }
-        }
-
         const toDos = document.querySelectorAll('to-do');
-        toDos.forEach(td => td.addEventListener('click', toggleInfoPanel));
+        toDos.forEach(td => td.addEventListener('click', this.#toggleInfoPanel));
 
         const displayData = (e) => {
             const td = e.currentTarget;
@@ -110,6 +125,23 @@ export class uiController {
         };
         toDos.forEach(td => td.addEventListener('click', displayData));
     }
+
+    #toggleInfoPanel = (e) => {
+        e.stopPropagation();
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'DIV') return;
+
+        if (this.#header.classList.contains('active')) {
+            this.#header.classList.remove('active');
+            return;
+        }
+
+        if (document.body.classList.contains('info-displayed')) {
+            document.body.classList.remove('info-displayed');
+        }
+        else {
+            document.body.classList.add('info-displayed');
+        }
+    } 
 
     renderToDos(projectName, toDos) {
         this.#toDosContainer.replaceChildren();
@@ -176,12 +208,12 @@ export class uiController {
             a.append(span);
 
             a.insertAdjacentHTML('beforeend', `
-                <div>
+                <div class="edit-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
                         <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3"/>
                     </svg>
                 </div>
-                <div>
+                <div class="delete-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
                         <path d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"/>
                     </svg>
@@ -189,8 +221,36 @@ export class uiController {
             `);
 
             li.append(a);
+
+            const editBtn = li.querySelector('.edit-btn');
+            editBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.#displayEditModal();
+            })
+            const deleteBtn = li.querySelector('.delete-btn');
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.#displayDeleteModal();
+            })
+
             this.#tabsContainer.append(li);
         });
+    }
+
+    #displayEditModal() {
+        if (this.#header.classList.contains('active')) {
+            this.#header.classList.remove('active');
+        }
+
+        this.#editModal.showModal();
+    }
+
+    #displayDeleteModal() {
+        if (this.#header.classList.contains('active')) {
+            this.#header.classList.remove('active');
+        }
+
+        this.#deleteModal.showModal();
     }
 
     closeHeader() {

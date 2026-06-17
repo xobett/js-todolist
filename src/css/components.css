@@ -194,3 +194,117 @@ option:not(option:last-of-type) {
 .info-panel ::picker(select) {
     top: anchor(bottom);
 }
+
+/* DIALOG */
+
+dialog[open]{
+    opacity: 1;
+    transform: scale(1);
+}
+
+dialog {
+    position: fixed;
+    inset: 0;
+    margin: auto;
+
+    border: none;
+    outline: none;
+    border-radius: 10px;
+
+    width: min(400px, 80%);
+    height: min(500px, 60%);
+
+    background-color: var(--clr-teal-75);
+
+    opacity: 0;
+    transform: scale(0);
+    transition:
+        opacity 0.5s ease-out,
+        transform 0.5s ease-out,
+        overlay 0.5s ease-out allow-discrete,
+        display 0.5s ease-out allow-discrete;
+}
+
+@starting-style{
+    dialog[open]{
+        opacity: 0;
+        transform: scale(0);
+    }
+}
+dialog::backdrop{
+    background-color: transparent;
+    transition:
+        display 0.5s ease-out allow-discrete,
+        overlay 0.5s ease-out allow-discrete,
+        background-color 0.5s ease-out;
+}
+
+dialog[open]::backdrop{
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+@starting-style{
+    dialog[open]::backdrop{
+        background-color: transparent;
+    }
+}
+
+dialog[id="edit-modal"] {
+    display: grid;
+    grid-template-rows: min-content;
+    align-items: center;
+}
+
+dialog[id="edit-modal"] .btn {
+    justify-self: end;
+}
+
+dialog[id="edit-modal"] .icon-picker {
+    
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 7px;
+
+    height: 140px;
+}
+
+dialog[id="edit-modal"] .modal-title,
+dialog[id="edit-modal"] .title-icon {
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 0.8rem;
+}
+
+dialog[id="edit-modal"] input[type="text"] {
+    width: 100%;
+    background-color: var(--clr-white-50);
+}
+
+.icon-picker button {
+    display: grid;
+    place-items: center;
+
+    border-radius: 12px;
+    background-color: var(--clr-semi-transparent);
+    border: 1px solid var(--clr-transparent-grey);
+
+    transition: 
+        background-color 0.2s ease;
+}
+
+.icon-picker button.selected,
+.icon-picker button:hover {
+    background-color: var(--clr-white-50);
+    cursor: pointer;
+}
+
+.icon-picker button.selected svg,
+.icon-picker button:hover svg {
+    fill: var(--clr-white-100);
+}
+
+.icon-picker svg {
+    width: var(--icon-picker-size, 40px);
+    height: var(--icon-picker-size, 40px);
+}
