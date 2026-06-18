@@ -15,6 +15,10 @@ to-do:hover {
     background-color: var(--clr-light-green);
 }
 
+to-do > *:not(span) {
+    flex-shrink: 0;
+}
+
 to-do .delete-btn {
     padding: 5px;
     margin-left: auto;

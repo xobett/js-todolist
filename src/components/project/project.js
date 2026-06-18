@@ -2,12 +2,13 @@ export class Project {
     #id;
     title;
     #toDosIds = [];
+    icon;
 
     static fromJSON(data) {
-        return new this(data.title, data.Id, data.toDosIds);
+        return new this(data.title, data.Id, data.toDosIds, data.icon);
     }
 
-    constructor(title, id = null, toDosIds = null) {
+    constructor(title, id = null, toDosIds = null, icon = null) {
         if (typeof title !== 'string' || title.length <= 0){
             throw new Error("Title must be a valid string");
         }
@@ -15,6 +16,7 @@ export class Project {
         this.#id = id ?? (crypto.randomUUID?.() ?? this.#generateUUID());
         this.title = title;
         this.#toDosIds = toDosIds ?? [];
+        this.icon = icon ?? null;
     }
 
     get Id() {
@@ -44,6 +46,7 @@ export class Project {
             "Id" : this.Id,
             "title" : this.title,
             "toDosIds" : this.#toDosIds,
+            "icon" : this.icon,
         };
     }
 

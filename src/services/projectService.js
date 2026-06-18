@@ -76,14 +76,20 @@ const projectService = (() => {
         return project;
     }
     
-    function edit(id, data) {
+    function edit(id, inputData) {
         const project = repository.find(p => p.Id == id);
 
         if (!project) {
             throw new Error(`Project ${id} not found`);
         }
 
-        project.title = data.title ?? project.title;
+        const data = {
+            title: inputData.get('title'),
+            icon: inputData.get('icon'),
+        };
+
+        project.title = data.title == '' ? project.title: data.title;
+        project.icon = data.icon == '' ? project.icon: data.icon;
 
         saveChanges();
     }
@@ -164,7 +170,7 @@ const projectService = (() => {
     }
 
     function mapToDTO(entity){
-        return new ProjectDTO(entity.Id, entity.title);
+        return new ProjectDTO(entity.Id, entity.title, entity.icon);
     }
 
     return { loadSaved, seed, getAll, get, getByName, create, edit, remove, removeToDosIds, getToDosIds, add, moveToDosIdsToProject };

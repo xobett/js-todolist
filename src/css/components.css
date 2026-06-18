@@ -37,6 +37,10 @@ button {
     transform: scale(0.97);
 }
 
+.btn.btn-danger {
+    background-color: var(--clr-red-25);
+}
+
 /*INPUT CHECKBOX*/
 
 input[type="checkbox"] {
@@ -257,6 +261,7 @@ dialog[id="edit-modal"] {
 
 dialog[id="edit-modal"] .btn {
     justify-self: end;
+    margin-top: 5px;
 }
 
 dialog[id="edit-modal"] .icon-picker {
@@ -307,4 +312,21 @@ dialog[id="edit-modal"] input[type="text"] {
 .icon-picker svg {
     width: var(--icon-picker-size, 40px);
     height: var(--icon-picker-size, 40px);
+    pointer-events: none;
+}
+
+dialog[id="delete-modal"] {
+    display: grid;
+    height: min(220px, 40%);
+
+    text-align: center;
+}
+
+dialog[id="delete-modal"] .modal-title {
+    color: white;
+}
+
+dialog[id="delete-modal"] .btns-container {
+    display: flex;
+    justify-content: space-around;
 }

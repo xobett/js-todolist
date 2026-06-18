@@ -80,6 +80,22 @@ const appController = ((uiController) =>{
 
             this.reset();
         });
+
+        uiController.EditProjectForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const data = new FormData(this);
+            const response = editProject(data);
+
+            console.log(response)
+            if (response.ok) {
+                const projects = getAllProjects();
+                refreshProjectSection(projects);
+            }
+
+            this.reset();
+            uiController.closeEditModal();
+        });
     }
 
     function assignToggleHandlers() {
@@ -170,10 +186,10 @@ const appController = ((uiController) =>{
         return response;
     }
 
-    function editToDo(id, data) {
+    function editToDo(id, inputData) {
         let response = {ok: true, error: null};
         try {
-            toDoService.edit(id, data);
+            toDoService.edit(id, inputData);
         } catch (error) {
             response.ok = false;
             response.error = error;
@@ -216,10 +232,10 @@ const appController = ((uiController) =>{
         return response;
     }
     
-    function editProject(id, data) {
+    function editProject(inputData) {
         let response = {ok: true, error: null};
         try {
-            projectService.edit(id, data);
+            projectService.edit(inputData.get('Id'), inputData);
         } catch (error) {
             response.ok = false;
             response.error = error;

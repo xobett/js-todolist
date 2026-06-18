@@ -1,8 +1,7 @@
 export class ProjectDTO {
-    constructor(id, title, notes, color) {
+    constructor(id, title, icon) {
         this.Id = id;
         this.title = title;
-        this.notes = notes;
-        this.color = color;
+        this.icon = icon;
     }
 }
