@@ -1,11 +1,13 @@
 to-do {
+    position: relative;
+    overflow: hidden;
     display: flex;
     align-items: center;
     gap: 20px;
     background-color: var(--clr-teal-25);
 
     border-radius: var(--border-radius);
-    padding: 10px;
+    padding-inline: 20px;
 
     transition: 
         background-color 0.2s ease;
@@ -38,4 +40,27 @@ to-do .delete-btn:hover {
 to-do .delete-btn:hover svg{
     fill: white;
     pointer-events: none;
+}
+
+to-do::before {
+    position: absolute;
+    height: 100%;
+    width: 10px;
+    left: 0;
+    content: "";
+
+    --bckg-clr: unset;
+    background-color: var(--bckg-clr);
+}
+
+to-do[data-priority="HIGH"]::before {
+    --bckg-clr: var(--clr-crimson, red);
+}
+
+to-do[data-priority="MEDIUM"]::before {
+    --bckg-clr: var(--clr-mcdonalds-yellow, yellow);
+}
+
+to-do[data-priority="LOW"]::before {
+    --bckg-clr: var(--clr-tufts-blue, blue);
 }

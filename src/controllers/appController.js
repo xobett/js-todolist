@@ -7,7 +7,7 @@ import { uiController } from "./uiController.js";
 export { appController };
 
 const appController = ((uiController) =>{
-    let currentProject;
+    let currentProject = null;
 
     function seed() {
         const toDoSeeder = new ToDoSeeder();
@@ -23,14 +23,23 @@ const appController = ((uiController) =>{
         
         onInitLoadSaved();
         const toDos = getAllToDos();
-        refreshToDos('All tasks', toDos);
+        refreshToDos();
 
         const projects = getAllProjects();
         refreshProjectSection(projects);
     }
     
-    function refreshToDos(sectionName, toDos){
-        uiController.renderToDos(sectionName, toDos);
+    function refreshToDos(){
+        let toDos;
+        if (currentProject) {
+            const toDosIds = getToDosIdsFromProject(currentProject.Id); 
+            toDos = toDosIds.map((id) => getToDo(id));
+        }
+        else {
+            toDos = getAllToDos();
+        }
+
+        uiController.renderToDos(currentProject ? currentProject.title : 'All tasks', toDos);
         assignToggleHandlers();
         assignDeleteHandlers();
     }
@@ -48,23 +57,31 @@ const appController = ((uiController) =>{
             const response = createToDo(data);
 
             if (response.ok) {
-                if (currentProject != null){
+                if (currentProject !== null){
                     const project = getProject(currentProject.Id);
 
                     if (!project) return;
                     addToDosIdsToProject(project.Id, response.data.Id);
-                    const toDosIds = getToDosIdsFromProject(project.Id);
-                    const toDos = toDosIds.map((id) => getToDo(id));
-
-                    refreshToDos(project.title, toDos);
                 }
-                else {
-                    const toDos = getAllToDos();
-                    refreshToDos("All tasks", toDos);
-                }
+                refreshToDos();
             }
 
             this.reset();
+        });
+
+        uiController.EditToDoForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const data = new FormData(this);
+            const response = editToDo(data);
+
+            console.log(response);
+
+            if (response.ok) {
+                refreshToDos();
+            }
+
+            uiController.closeInfoPanel();
         });
 
         uiController.NewProjectForm.addEventListener('submit', function(e) {
@@ -87,7 +104,6 @@ const appController = ((uiController) =>{
             const data = new FormData(this);
             const response = editProject(data);
 
-            console.log(response)
             if (response.ok) {
                 const projects = getAllProjects();
                 refreshProjectSection(projects);
@@ -95,6 +111,23 @@ const appController = ((uiController) =>{
 
             this.reset();
             uiController.closeEditModal();
+        });
+
+        uiController.DeleteProjectForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const data = new FormData(this);
+            const response = removeProject(data);
+
+            if (response.ok) {
+                currentProject = null;
+                const projects = getAllProjects();
+                refreshProjectSection(projects);
+
+                refreshToDos();
+            }
+
+            uiController.closeDeleteModal();
         });
     }
 
@@ -115,8 +148,7 @@ const appController = ((uiController) =>{
             const response = removeToDo(dataset.Id);
 
             if (response.ok) {
-                const toDos = getAllToDos();
-                refreshToDos("Updated", toDos);
+                refreshToDos();
             }
         }));
     }
@@ -126,22 +158,13 @@ const appController = ((uiController) =>{
             const dataset = e.target.closest('.tab').dataset;
 
             if (dataset.Id) {
-                const project = getProject(dataset.Id);
-                const toDosIds = getToDosIdsFromProject(project.Id);
-                const toDos = toDosIds.map((id) => getToDo(id));
-                
-                if (project) {
-                    refreshToDos(project.title, toDos);
-                    currentProject = project;
-                }
+                currentProject = getProject(dataset.Id);
             }
             else {
-                const toDos = getAllToDos();
-                refreshToDos('All tasks', toDos);
-
                 currentProject = null;
             }
-            
+
+            refreshToDos();
             uiController.closeHeader();
             document.activeElement.blur();
         }));
@@ -186,10 +209,10 @@ const appController = ((uiController) =>{
         return response;
     }
 
-    function editToDo(id, inputData) {
+    function editToDo(inputData) {
         let response = {ok: true, error: null};
         try {
-            toDoService.edit(id, inputData);
+            toDoService.edit(inputData.get('Id'), inputData);
         } catch (error) {
             response.ok = false;
             response.error = error;
@@ -243,10 +266,12 @@ const appController = ((uiController) =>{
         return response;
     }
     
-    function removeProject(id) {
+    function removeProject(inputData) {
         let response = {ok: true, error: null};
         try {
-            projectService.remove(id);
+            const ids = getToDosIdsFromProject(inputData.get('Id'));
+            ids.forEach((id) => removeToDo(id));
+            projectService.remove(inputData.get('Id'));
         } catch (error) {
             response.ok = false;
             response.error = error;

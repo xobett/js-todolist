@@ -51,19 +51,22 @@ export class uiController {
 
     #infoPanel;
     #closeInfoPanelBtn;
-    #input_title;
-    #input_description;
-    #input_dueDate;
-    #input_priority;
+    #edit_input_title;
+    #edit_input_description;
+    #edit_input_dueDate;
+    #edit_input_priority;
+    #edit_input_Id;
 
     #editModal;
     #deleteModal;
 
-    #project_input_title;
-    #project_input_Id;
-    #project_input_icon;
-
+    #project_edit_input_title;
+    #project_edit_input_Id;
+    #project_edit_input_icon;
+    
     #iconBtns;
+
+    #project_delete_input_Id;
 
     constructor(){}
 
@@ -81,19 +84,22 @@ export class uiController {
 
         this.#infoPanel = document.querySelector('.info-panel');
         this.#closeInfoPanelBtn = document.getElementById('close-info-panel');
-        this.#input_title = this.#infoPanel.querySelector('input[name="title"]');
-        this.#input_description = this.#infoPanel.querySelector('input[name="description"]');
-        this.#input_dueDate = this.#infoPanel.querySelector('input[name="dueDate"]');
-        this.#input_priority = this.#infoPanel.querySelector('select[name="priority"]');
+        this.#edit_input_title = this.#infoPanel.querySelector('input[name="title"]');
+        this.#edit_input_description = this.#infoPanel.querySelector('input[name="description"]');
+        this.#edit_input_dueDate = this.#infoPanel.querySelector('input[name="dueDate"]');
+        this.#edit_input_priority = this.#infoPanel.querySelector('select[name="priority"]');
+        this.#edit_input_Id = this.#infoPanel.querySelector('input[name="Id"]');
 
         this.#editModal = document.getElementById('edit-modal');
         this.#deleteModal = document.getElementById('delete-modal');
 
-        this.#project_input_title = this.#editModal.querySelector('input');
-        this.#project_input_Id = this.#editModal.querySelector('input[name="Id"]');
-        this.#project_input_icon = this.#editModal.querySelector('input[name="icon"]');
-
+        this.#project_edit_input_title = this.#editModal.querySelector('input');
+        this.#project_edit_input_Id = this.#editModal.querySelector('input[name="Id"]');
+        this.#project_edit_input_icon = this.#editModal.querySelector('input[name="icon"]');
+        
         this.#iconBtns = this.#editModal.querySelectorAll('.icon-option');
+
+        this.#project_delete_input_Id = this.#deleteModal.querySelector('input[name="Id"]');
     }
 
     #assignEventHandlers() {
@@ -112,6 +118,8 @@ export class uiController {
                 this.#header.classList.add('active');
             }
         });
+
+        this.#deleteModal.querySelector('.btn:not(.btn-danger)').addEventListener('click', () => this.closeDeleteModal());
 
         document.addEventListener('click', (e) => {
             const clickedInsideInfoPanel = this.#infoPanel.contains(e.target);
@@ -158,7 +166,7 @@ export class uiController {
 
         this.#iconBtns.forEach((icon) => icon.addEventListener('click', (e) => {
             this.#iconBtns.forEach((i) => i.classList.remove('selected'));
-            this.#project_input_icon.value = e.target.getAttribute('data-icon');
+            this.#project_edit_input_icon.value = e.target.getAttribute('data-icon');
             e.target.classList.add('selected');
         }));
     }
@@ -169,10 +177,11 @@ export class uiController {
 
         const displayData = (e) => {
             const td = e.currentTarget;
-            this.#input_title.value = td.dataset.title;
-            this.#input_description.value = td.dataset.description;
-            this.#input_dueDate.value = format(new Date(td.dataset.dueDate), 'yyyy-MM-dd');
-            this.#input_priority.value = td.dataset.priority;
+            this.#edit_input_Id.value = td.dataset.Id;
+            this.#edit_input_title.value = td.dataset.title;
+            this.#edit_input_description.value = td.dataset.description;
+            this.#edit_input_dueDate.value = td.dataset.dueDate;
+            this.#edit_input_priority.value = td.dataset.priority;
         };
         toDos.forEach(td => td.addEventListener('click', displayData));
     }
@@ -186,17 +195,12 @@ export class uiController {
             return;
         }
 
-        if (document.body.classList.contains('info-displayed')) {
-            document.body.classList.remove('info-displayed');
-        }
-        else {
-            document.body.classList.add('info-displayed');
-        }
+        document.body.classList.add('info-displayed');
     } 
 
     renderToDos(projectName, toDos) {
         this.#toDosContainer.replaceChildren();
-        this.#currentSectionTxt.textContent = projectName ?? "No name";
+        this.#currentSectionTxt.textContent = projectName ?? "If you think you've got this bugged, no you did not";
 
         toDos.forEach(td => {
             if (td === undefined || td === null) return;
@@ -206,7 +210,7 @@ export class uiController {
             toDo.dataset.Id = td.Id;
             toDo.dataset.title = td.title;
             toDo.dataset.description = td.description ?? '';
-            toDo.dataset.dueDate = new Date(td.dueDate);
+            toDo.dataset.dueDate = td.dueDate;
             toDo.dataset.priority = td.priority;
 
             const input = Object.assign(document.createElement('input'), {
@@ -282,8 +286,8 @@ export class uiController {
         e.stopPropagation();
         const dataset = e.target.closest('li.tab').dataset;
         
-        this.#project_input_title.value = dataset.title;
-        this.#project_input_Id.value = dataset.Id;
+        this.#project_edit_input_title.value = dataset.title;
+        this.#project_edit_input_Id.value = dataset.Id;
 
         if (this.#header.classList.contains('active')) {
             this.#header.classList.remove('active');
@@ -294,6 +298,9 @@ export class uiController {
 
     #showDeleteModal = (e) => {
         e.stopPropagation();
+        const dataset = e.target.closest('li.tab').dataset;
+        
+        this.#project_delete_input_Id.value = dataset.Id;
 
         if (this.#header.classList.contains('active')) {
             this.#header.classList.remove('active');
@@ -317,12 +324,20 @@ export class uiController {
         }
     }
 
+    closeInfoPanel(){
+        document.body.classList.remove('info-displayed');
+    }
+
     get Inputs() {
         return document.querySelectorAll('to-do input[type="checkbox"]');
     }
 
     get NewToDoForm() {
         return document.getElementById('new-to-do');
+    }
+
+    get EditToDoForm() {
+        return document.getElementById('to-do-edit-form');
     }
 
     get NewProjectForm() {
@@ -333,8 +348,8 @@ export class uiController {
         return document.getElementById('project-edit-form');
     }
 
-    get EditForm() {
-        return document.getElementById('edit-form');
+    get DeleteProjectForm() {
+        return document.getElementById('project-delete-form');
     }
 
     get DeleteButtons() {

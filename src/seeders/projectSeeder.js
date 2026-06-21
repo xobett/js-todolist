@@ -3,8 +3,6 @@ export { ProjectSeeder };
 
 class ProjectSeeder {
     values = [
-        {title: "First Project"},
-        {title: "Second Project"},
-        {title: "Third Project"},
+        {title: "Your first project!"},
     ];
 }

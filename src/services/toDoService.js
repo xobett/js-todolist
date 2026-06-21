@@ -1,7 +1,7 @@
 import { ToDo } from "../components/toDo/toDo.js";
 import { ToDoDTO } from "../components/toDo/toDoDTO.js";
 import { PriorityEnum } from "../enums/priorityEnum.js";
-import { addDays } from "date-fns";
+import { addDays, format } from "date-fns";
 export { toDoService };
 
 const toDoService = (() => {
@@ -30,7 +30,7 @@ const toDoService = (() => {
     function seed(toDos) {
         try {
             toDos.forEach((td) => {
-                repository.push(new ToDo(td.title, td.description, td.dueDate, td.isCompleted, td.priority));
+                repository.push(new ToDo(td.title, td.description, format(td.dueDate, 'yyyy-MM-dd'), td.isCompleted, td.priority));
             });
             saveChanges();
         } catch (error) {
@@ -45,7 +45,7 @@ const toDoService = (() => {
 
     function get(id) {
         const toDo = repository.find((td) => td.Id == id);
-        return toDo;
+        return mapToDTO(toDo);
     }
 
     function getByName(term) {
@@ -84,7 +84,7 @@ const toDoService = (() => {
         const data = {
             title: inputData.get('title'),
             description: null,
-            dueDate: date,
+            dueDate: format(date, 'yyyy-MM-dd'),
             isCompleted: false,
             priority: PriorityEnum[inputData.get('priority')],
         };
@@ -94,10 +94,10 @@ const toDoService = (() => {
 
         saveChanges();
 
-        return toDo;
+        return mapToDTO(toDo);
     }
 
-    function edit(id, data) {
+    function edit(id, inputData) {
         //EDIT
         const toDo = repository.find((td) => td.Id == id);
 
@@ -105,26 +105,16 @@ const toDoService = (() => {
             throw new Error(`To Do ${id} not found`);
         }
 
-        if (typeof data.title !== 'string' || data.title.length <= 0){
-            throw new Error("Title must be a valid string");
-        }
+        const data = {
+            title: inputData.get('title'),
+            description: inputData.get('description'),
+            dueDate: inputData.get('dueDate'),
+            priority: PriorityEnum[inputData.get('priority')],
+        };
 
-        if (typeof data.description !== 'string' || data.description.length <= 0){
-            throw new Error("Description must be a valid string");
-        }
-
-        if (typeof data.isUrgent !== 'boolean'){
-            throw new Error("Is urgent value must be a valid boolean");
-        }
-        
-        if (typeof data.isCompleted !== 'boolean'){
-            throw new Error("Is completed value must be a valid boolean");
-        }
-
-        toDo.title = data.title ?? toDo.title;
-        toDo.description = data.description ?? toDo.description;
-        toDo.dueDate = data.dueDate ?? toDo.dueDate;
-        toDo.isCompleted = data.isCompleted ?? toDo.isCompleted;
+        toDo.title = data.title == '' ? toDo.title : data.title;
+        toDo.description = data.description;
+        toDo.dueDate = data.dueDate == '' ? toDo.dueDate : data.dueDate;
         toDo.priority = data.priority ?? toDo.priority;
 
         saveChanges();
@@ -137,8 +127,6 @@ const toDoService = (() => {
             throw new Error(`To Do ${id} not found`);
         }
         repository = repository.filter((td) => td.Id !== toDo.Id);
-
-        //TODO: REMOVE FROM EXISTING PROJECTS AS WELL!
 
         saveChanges();
     }
